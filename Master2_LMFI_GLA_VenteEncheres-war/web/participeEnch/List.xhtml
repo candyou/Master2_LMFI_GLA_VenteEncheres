@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListParticipeEnchTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListParticipeEnchEmpty}" rendered="#{participeEnchController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{participeEnchController.items.rowCount > 0}">
+                    <h:outputText value="#{participeEnchController.pagination.pageFirstItem + 1}..#{participeEnchController.pagination.pageLastItem + 1}/#{participeEnchController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{participeEnchController.previous}" value="#{bundle.Previous} #{participeEnchController.pagination.pageSize}" rendered="#{participeEnchController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{participeEnchController.next}" value="#{bundle.Next} #{participeEnchController.pagination.pageSize}" rendered="#{participeEnchController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{participeEnchController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListParticipeEnchTitle_idpartEnch}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idpartEnch}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListParticipeEnchTitle_prixProp}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.prixProp}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListParticipeEnchTitle_etatParticip}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.etatParticip}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListParticipeEnchTitle_etatAchat}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.etatAchat}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListParticipeEnchTitle_idArticle}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idArticle}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListParticipeEnchTitle_idUser}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idUser}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{participeEnchController.prepareView}" value="#{bundle.ListParticipeEnchViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{participeEnchController.prepareEdit}" value="#{bundle.ListParticipeEnchEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{participeEnchController.destroy}" value="#{bundle.ListParticipeEnchDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{participeEnchController.prepareCreate}" value="#{bundle.ListParticipeEnchCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListParticipeEnchIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateParticipeEnchTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateParticipeEnchLabel_idpartEnch}" for="idpartEnch" />
+                    <h:inputText id="idpartEnch" value="#{participeEnchController.selected.idpartEnch}" title="#{bundle.CreateParticipeEnchTitle_idpartEnch}" required="true" requiredMessage="#{bundle.CreateParticipeEnchRequiredMessage_idpartEnch}"/>
+                    <h:outputLabel value="#{bundle.CreateParticipeEnchLabel_prixProp}" for="prixProp" />
+                    <h:inputText id="prixProp" value="#{participeEnchController.selected.prixProp}" title="#{bundle.CreateParticipeEnchTitle_prixProp}" />
+                    <h:outputLabel value="#{bundle.CreateParticipeEnchLabel_etatParticip}" for="etatParticip" />
+                    <h:inputText id="etatParticip" value="#{participeEnchController.selected.etatParticip}" title="#{bundle.CreateParticipeEnchTitle_etatParticip}" />
+                    <h:outputLabel value="#{bundle.CreateParticipeEnchLabel_etatAchat}" for="etatAchat" />
+                    <h:inputText id="etatAchat" value="#{participeEnchController.selected.etatAchat}" title="#{bundle.CreateParticipeEnchTitle_etatAchat}" />
+                    <h:outputLabel value="#{bundle.CreateParticipeEnchLabel_idArticle}" for="idArticle" />
+                    <h:selectOneMenu id="idArticle" value="#{participeEnchController.selected.idArticle}" title="#{bundle.CreateParticipeEnchTitle_idArticle}" >
+                        <f:selectItems value="#{articlesController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateParticipeEnchLabel_idUser}" for="idUser" />
+                    <h:selectOneMenu id="idUser" value="#{participeEnchController.selected.idUser}" title="#{bundle.CreateParticipeEnchTitle_idUser}" >
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{participeEnchController.create}" value="#{bundle.CreateParticipeEnchSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{participeEnchController.prepareList}" value="#{bundle.CreateParticipeEnchShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateParticipeEnchIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateUserAdresseTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateUserAdresseLabel_defaultAdr}" for="defaultAdr" />
+                    <h:inputText id="defaultAdr" value="#{userAdresseController.selected.defaultAdr}" title="#{bundle.CreateUserAdresseTitle_defaultAdr}" />
+                    <h:outputLabel value="#{bundle.CreateUserAdresseLabel_adresses}" for="adresses" />
+                    <h:selectOneMenu id="adresses" value="#{userAdresseController.selected.adresses}" title="#{bundle.CreateUserAdresseTitle_adresses}" required="true" requiredMessage="#{bundle.CreateUserAdresseRequiredMessage_adresses}">
+                        <f:selectItems value="#{adressesController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateUserAdresseLabel_users}" for="users" />
+                    <h:selectOneMenu id="users" value="#{userAdresseController.selected.users}" title="#{bundle.CreateUserAdresseTitle_users}" required="true" requiredMessage="#{bundle.CreateUserAdresseRequiredMessage_users}">
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{userAdresseController.create}" value="#{bundle.CreateUserAdresseSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{userAdresseController.prepareList}" value="#{bundle.CreateUserAdresseShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateUserAdresseIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

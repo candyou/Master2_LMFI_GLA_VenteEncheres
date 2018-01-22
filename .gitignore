@@ -1,3 +1,11 @@
 /Master2_LMFI_GLA_VenteEncheres-ejb/build/
+<<<<<<< HEAD
 /Master2_LMFI_GLA_VenteEncheres-ejb/dist/
 /Master2_LMFI_GLA_VenteEncheres-war/build/
+=======
+/build/
+/dist/
+/Master2_LMFI_GLA_VenteEncheres-war/dist/
+/Master2_LMFI_GLA_VenteEncheres-war/build/
+/Master2_LMFI_GLA_VenteEncheres-ejb/dist/
+>>>>>>> 03109f2187f70f24945ece4ca4a9cf4489d0c6f3
