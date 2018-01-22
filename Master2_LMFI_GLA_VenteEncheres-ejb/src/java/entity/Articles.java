@@ -63,11 +63,11 @@ public class Articles implements Serializable {
     @JoinTable(name = "article_categ", joinColumns = {
         @JoinColumn(name = "id_article", referencedColumnName = "idarticle")}, inverseJoinColumns = {
         @JoinColumn(name = "id_categ", referencedColumnName = "idcategorie")})
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Categorie> categorieList;
     @OneToMany(mappedBy = "idArticle")
     private List<ParticipeEnch> participeEnchList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "articles")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "articles")
     private List<UserArticle> userArticleList;
 
     public Articles() {

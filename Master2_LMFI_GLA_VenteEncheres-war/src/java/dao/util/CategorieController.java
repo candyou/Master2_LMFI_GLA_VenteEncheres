@@ -28,6 +28,7 @@ public class CategorieController implements Serializable {
     private CategorieFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+  
 
     public CategorieController() {
     }

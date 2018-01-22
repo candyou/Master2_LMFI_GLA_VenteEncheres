@@ -1,12 +1,15 @@
 package dao.util;
 
-import entity.Articles;
+import entity.*;
 import dao.util.util.JsfUtil;
 import dao.util.util.PaginationHelper;
-import bean.ArticlesFacade;
+import bean.*;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Vector;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -26,9 +29,22 @@ public class ArticlesController implements Serializable {
     private DataModel items = null;
     @EJB
     private ArticlesFacade ejbFacade;
+
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private String[] checkedcategories;
 
+    public String[] getCheckedcategories() {
+        return checkedcategories;
+    }
+
+    public void setCheckedcategories(String[] checkedcategories) {
+        this.checkedcategories = checkedcategories;
+    }
+    
+    
+    
+    
     public ArticlesController() {
     }
 
@@ -81,7 +97,35 @@ public class ArticlesController implements Serializable {
 
     public String create() {
         try {
+            // Authentification doit etre faites ici . 
+            UserArticle ua = new UserArticle();
+            List<Categorie> list = new Vector<>();
+          
+           
+            for(String c : checkedcategories){
+            Categorie cat=new Categorie();
+                cat.setNomCat(c);
+           
+                list.add(cat);
+            }
+           List<UserArticle> listuserarticles = new Vector<>();
+           Users u = new Users();
+              u.setIdusers(2);
+            UserArticlePK upk=new UserArticlePK(u.getIdusers(), current.getIdarticle());
+        
+           ua.setUserArticlePK(upk);
+           
+           ua.setArticles(current);
+           ua.setUsers(u);
+          
+          //  uaFacade.create(ua);
+           ua.setDateCreate(new Date());
+            listuserarticles.add(ua);
+              current.setCategorieList(list);
+          current.setUserArticleList(listuserarticles);
+  
             getFacade().create(current);
+            
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArticlesCreated"));
             return prepareCreate();
         } catch (Exception e) {

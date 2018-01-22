@@ -27,6 +27,13 @@
                     <h:inputText id="dateLimite" value="#{articlesController.selected.dateLimite}" title="#{bundle.CreateArticlesTitle_dateLimite}" >
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                     </h:inputText>
+                    <h:selectManyCheckbox value="#{articlesController.checkedcategories}">
+   			<f:selectItem itemValue="Vehicule" itemLabel="Vehicule" />
+   			<f:selectItem itemValue="Multimedia" itemLabel="Multimedia" />
+   			<f:selectItem itemValue="Immobilier" itemLabel="Immobilier" />
+   			<f:selectItem itemValue="Autres" itemLabel="Autres" />
+   		</h:selectManyCheckbox>
+                    
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{articlesController.create}" value="#{bundle.CreateArticlesSaveLink}" />

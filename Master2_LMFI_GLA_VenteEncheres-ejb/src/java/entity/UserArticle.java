@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -40,10 +41,10 @@ public class UserArticle implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dateCreate;
     @JoinColumn(name = "id_article", referencedColumnName = "idarticle", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,cascade = CascadeType.PERSIST)
     private Articles articles;
     @JoinColumn(name = "id_user", referencedColumnName = "idusers", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,cascade = CascadeType.PERSIST)
     private Users users;
 
     public UserArticle() {

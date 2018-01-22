@@ -61,11 +61,11 @@ public class Users implements Serializable {
     private String mdp;
     @OneToMany(mappedBy = "idUser")
     private List<ParticipeEnch> participeEnchList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "users")
     private List<UserArticle> userArticleList;
     @OneToMany(mappedBy = "idUser")
     private List<Facturation> facturationList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "users")
     private List<UserAdresse> userAdresseList;
 
     public Users() {
