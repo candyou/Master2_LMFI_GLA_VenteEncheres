@@ -50,10 +50,8 @@ public class Articles implements Serializable {
     @Basic(optional = false)
     @Column(name = "idarticle")
     private Integer idarticle;
-    @Size(max = 45)
     @Column(name = "nom_article")
     private String nomArticle;
-    @Size(max = 255)
     @Column(name = "description")
     private String description;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

@@ -40,7 +40,6 @@ public class Categorie implements Serializable {
     @Basic(optional = false)
     @Column(name = "idcategorie")
     private Integer idcategorie;
-    @Size(max = 45)
     @Column(name = "nom_cat")
     private String nomCat;
     @ManyToMany(mappedBy = "categorieList")

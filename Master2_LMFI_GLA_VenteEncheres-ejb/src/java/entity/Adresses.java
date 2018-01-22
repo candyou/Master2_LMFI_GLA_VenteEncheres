@@ -46,10 +46,8 @@ public class Adresses implements Serializable {
     private Integer idadresse;
     @Column(name = "num_rue")
     private Integer numRue;
-    @Size(max = 45)
     @Column(name = "nom_rue")
     private String nomRue;
-    @Size(max = 45)
     @Column(name = "ville")
     private String ville;
     @Column(name = "cp")
