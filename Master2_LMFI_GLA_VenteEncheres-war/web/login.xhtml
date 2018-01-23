@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    
+    <h:head>
+    </h:head>
+    <h:body>
+                <title>Connexion</title>
+
+
+                <!-- Page Heading/Breadcrumbs -->
+                <h1 class="mt-4 mb-3" align="center">
+                    Connectez-vous
+                </h1>
+
+                <div>
+                    <h:form id="loginForm" >
+                        <h:outputLabel>Login : </h:outputLabel>
+                        <h:inputText id="login" class="form-control" value="#{authentController.login}" />
+                        <br/>
+                        <h:outputLabel>Mot de Passe : </h:outputLabel>
+                        <h:inputSecret id="password" class="form-control" value="#{authentController.password}" />
+                        <br/>
+
+                        <!-- TODO change default id user -->
+                        <h:commandButton class="btn btn-primary" value="Connexion" action="#{authentController.authenti()}"/>
+                    </h:form>
+                </div>
+
+        
+
+    </h:body>
+</html>

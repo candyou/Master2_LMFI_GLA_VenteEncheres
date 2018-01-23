@@ -8,4 +8,11 @@
 /Master2_LMFI_GLA_VenteEncheres-war/dist/
 /Master2_LMFI_GLA_VenteEncheres-war/build/
 /Master2_LMFI_GLA_VenteEncheres-ejb/dist/
+<<<<<<< HEAD
 >>>>>>> 03109f2187f70f24945ece4ca4a9cf4489d0c6f3
+=======
+/nbproject/ant-deploy.xml
+/nbproject/build-impl.xml
+/nbproject/genfiles.properties
+/nbproject/private/private.properties
+>>>>>>> fca7c847d93f01afa0d06ca6f062c78cf80a6d3e
