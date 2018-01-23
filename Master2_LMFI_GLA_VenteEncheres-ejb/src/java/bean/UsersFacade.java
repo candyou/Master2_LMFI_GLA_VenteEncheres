@@ -29,4 +29,12 @@ public class UsersFacade extends AbstractFacade<Users> {
         super(Users.class);
     }
     
+    public Users findByUsernameAndPass(String login, String password){
+        Users us = em.createNamedQuery("Users.findByLogPass",Users.class)
+                .setParameter("login", login)
+                .setParameter("mdp", password)
+                .getSingleResult();
+        return us;
+    } 
+    
 }
