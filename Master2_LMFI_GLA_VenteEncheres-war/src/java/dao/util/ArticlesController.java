@@ -29,17 +29,28 @@ public class ArticlesController implements Serializable {
     private DataModel items = null;
     @EJB
     private ArticlesFacade ejbFacade;
-
+    @EJB 
+    private CategorieFacade catFacade;
+    @EJB 
+    private UsersFacade userFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    private String[] checkedcategories;
+    private List<Categorie> checkedcategories;
 
-    public String[] getCheckedcategories() {
+    public List<Categorie> getCheckedcategories() {
         return checkedcategories;
     }
 
-    public void setCheckedcategories(String[] checkedcategories) {
+    public void setCheckedcategories(List<Categorie> checkedcategories) {
         this.checkedcategories = checkedcategories;
+    }
+
+    public CategorieFacade getCatFacade() {
+        return catFacade;
+    }
+
+    public void setCatFacade(CategorieFacade catFacade) {
+        this.catFacade = catFacade;
     }
     
     
@@ -99,18 +110,9 @@ public class ArticlesController implements Serializable {
         try {
             // Authentification doit etre faites ici . 
             UserArticle ua = new UserArticle();
-            List<Categorie> list = new Vector<>();
-          
            
-            for(String c : checkedcategories){
-            Categorie cat=new Categorie();
-                cat.setNomCat(c);
-           
-                list.add(cat);
-            }
            List<UserArticle> listuserarticles = new Vector<>();
-           Users u = new Users();
-              u.setIdusers(2);
+          Users u = userFacade.find(1);
             UserArticlePK upk=new UserArticlePK(u.getIdusers(), current.getIdarticle());
         
            ua.setUserArticlePK(upk);
@@ -121,8 +123,8 @@ public class ArticlesController implements Serializable {
           //  uaFacade.create(ua);
            ua.setDateCreate(new Date());
             listuserarticles.add(ua);
-              current.setCategorieList(list);
-          current.setUserArticleList(listuserarticles);
+              current.setCategorieList(checkedcategories);
+        //  current.setUserArticleList(listuserarticles);
   
             getFacade().create(current);
             

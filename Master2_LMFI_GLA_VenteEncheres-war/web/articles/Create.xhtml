@@ -28,10 +28,9 @@
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                     </h:inputText>
                     <h:selectManyCheckbox value="#{articlesController.checkedcategories}">
-   			<f:selectItem itemValue="Vehicule" itemLabel="Vehicule" />
-   			<f:selectItem itemValue="Multimedia" itemLabel="Multimedia" />
-   			<f:selectItem itemValue="Immobilier" itemLabel="Immobilier" />
-   			<f:selectItem itemValue="Autres" itemLabel="Autres" />
+                        <f:selectItems value="#{articlesController.catFacade.findAll()}" 
+                                       var="elem" itemLabel="#{elem}" />
+   			
    		</h:selectManyCheckbox>
                     
                 </h:panelGrid>
