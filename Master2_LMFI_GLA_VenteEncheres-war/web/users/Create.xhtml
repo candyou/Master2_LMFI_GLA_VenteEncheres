@@ -9,27 +9,75 @@
         <ui:define name="title">
             <h:outputText value="#{bundle.CreateUsersTitle}"></h:outputText>
         </ui:define>
-        <ui:define name="body">
+        <ui:define name="container">
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.CreateUsersLabel_idusers}" for="idusers" />
-                    <h:inputText id="idusers" value="#{usersController.selected.idusers}" title="#{bundle.CreateUsersTitle_idusers}" required="true" requiredMessage="#{bundle.CreateUsersRequiredMessage_idusers}"/>
-                    <h:outputLabel value="#{bundle.CreateUsersLabel_nom}" for="nom" />
-                    <h:inputText id="nom" value="#{usersController.selected.nom}" title="#{bundle.CreateUsersTitle_nom}" />
-                    <h:outputLabel value="#{bundle.CreateUsersLabel_prenom}" for="prenom" />
-                    <h:inputText id="prenom" value="#{usersController.selected.prenom}" title="#{bundle.CreateUsersTitle_prenom}" />
-                    <h:outputLabel value="#{bundle.CreateUsersLabel_email}" for="email" />
-                    <h:inputText id="email" value="#{usersController.selected.email}" title="#{bundle.CreateUsersTitle_email}" />
-                    <h:outputLabel value="#{bundle.CreateUsersLabel_tel}" for="tel" />
-                    <h:inputText id="tel" value="#{usersController.selected.tel}" title="#{bundle.CreateUsersTitle_tel}" />
-                    <h:outputLabel value="#{bundle.CreateUsersLabel_login}" for="login" />
-                    <h:inputText id="login" value="#{usersController.selected.login}" title="#{bundle.CreateUsersTitle_login}" />
-                    <h:outputLabel value="#{bundle.CreateUsersLabel_mdp}" for="mdp" />
-                    <h:inputText id="mdp" value="#{usersController.selected.mdp}" title="#{bundle.CreateUsersTitle_mdp}" />
-                </h:panelGrid>
+            
+            <div class="row">
+            <h:form styleClass="form-horizontal">
+                    <legend><center><h2><b>Inscription</b></h2></center></legend><br/>
+                    <div class="col-lg-6">
+                    <div class="control-group">
+                            <label class="control-label" for="id">ID</label>
+                            <h:inputText id="idusers" value="#{usersController.selected.idusers}" title="#{bundle.CreateUsersTitle_idusers}" required="true" requiredMessage="#{bundle.CreateUsersRequiredMessage_idusers}" class="form-control"/>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="nom">Nom</label>
+                        <h:inputText id="nom" value="#{usersController.selected.nom}" title="#{bundle.CreateUsersTitle_nom}" class="form-control"/>
+                    </div>
+                    <div class="control-group">    
+                        <label class="control-label" for="prenom">Prenom</label>
+                        <h:inputText id="prenom" value="#{usersController.selected.prenom}" title="#{bundle.CreateUsersTitle_prenom}" class="form-control"/>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="email">Email</label>
+                        <h:inputText id="email" value="#{usersController.selected.email}" title="#{bundle.CreateUsersTitle_email}" class="form-control"/>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="tel">Telephone</label>
+                        <h:inputText id="tel" value="#{usersController.selected.tel}" title="#{bundle.CreateUsersTitle_tel}" class="form-control"/>
+                    </div>
+                    <div class="control-group">
+                            <div class="col-sm-6">
+                            <div class="control-group">
+                        <label class="control-label" for="tel">Numero Rue</label>
+                        <h:inputText id="nrue" value="#{usersController.selectedAdresse.numRue}" title="" class="form-control"/>
+                    </div>
+                            </div>
+                        <div class="col-sm-6">
+                            <div class="control-group">
+                        <label class="control-label" for="tel">Nom Rue</label>
+                        <h:inputText id="nomrue" value="#{usersController.selectedAdresse.nomRue}" title="" class="form-control"/>
+                    </div>
+                        </div>
+                    </div>
+                        <div class="control-group">
+                            <div class="col-sm-6">
+                            <div class="control-group">
+                        <label class="control-label" for="tel">Ville</label>
+                        <h:inputText id="ville" value="#{usersController.selectedAdresse.ville}" title="" class="form-control"/>
+                    </div>
+                            </div>
+                        <div class="col-sm-6">
+                            <div class="control-group">
+                        <label class="control-label" for="tel">Code Postal</label>
+                        <h:inputText id="cp" value="#{usersController.selectedAdresse.cp}" title="" class="form-control"/>
+                    </div>
+                        </div>
+                    </div>
+                        <div class="control-group">
+                        <label class="control-label" for="numcb">Numero Carte Bancaire</label>
+                        <h:inputText id="numcb" value="#{usersController.selectedFactur.numCb}" title="" class="form-control"/>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="login">Login</label>
+                        <h:inputText id="login" value="#{usersController.selected.login}" title="#{bundle.CreateUsersTitle_login}" class="form-control"/>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="mdp">Mot de passe</label>
+                        <h:inputText id="mdp" value="#{usersController.selected.mdp}" title="#{bundle.CreateUsersTitle_mdp}" class="form-control"/>
+                    </div>
                 <br />
                 <h:commandLink action="#{usersController.create}" value="#{bundle.CreateUsersSaveLink}" />
                 <br />
@@ -38,7 +86,10 @@
                 <br />
                 <br />
                 <h:link outcome="/index" value="#{bundle.CreateUsersIndexLink}"/>
+                </div>
             </h:form>
+                
+            </div>
         </ui:define>
     </ui:composition>
 

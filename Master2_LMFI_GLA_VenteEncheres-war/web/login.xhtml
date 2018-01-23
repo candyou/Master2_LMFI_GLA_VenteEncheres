@@ -4,35 +4,41 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
     
     <h:head>
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     </h:head>
     <h:body>
-                <title>Connexion</title>
-
-
-                <!-- Page Heading/Breadcrumbs -->
                 <h1 class="mt-4 mb-3" align="center">
-                    Connectez-vous
+                    Connexion
                 </h1>
+                    <div class="row">
+                        <div class="col-xs-12 col-xs-updated">
 
-                <div>
                     <h:form id="loginForm" >
-                        <h:outputLabel>Login : </h:outputLabel>
-                        <h:inputText id="login" class="form-control" value="#{authentController.login}" />
+                        <div class="form-group">
+                        <h:outputLabel styleClass="control-label col-sm-2">Login : </h:outputLabel>
+                        <div class="col-sm-10">
+                        <h:inputText id="login" class="form-control" value="#{authentController.login}" styleClass="form-control"/>
+                        </div>
                         <br/>
-                        <h:outputLabel>Mot de Passe : </h:outputLabel>
-                        <h:inputSecret id="password" class="form-control" value="#{authentController.password}" />
+                        <h:outputLabel styleClass="control-label col-sm-2">Mot de Passe : </h:outputLabel>
+                        <div class="col-sm-10">
+                        <h:inputSecret id="password" class="form-control" value="#{authentController.password}" styleClass="form-control"/>
+                        </div>
                         <br/>
+                        </div>
 
                         <!-- TODO change default id user -->
-                        <h:commandButton class="btn btn-primary" value="Connexion" action="#{authentController.authenti()}"/>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                            <h:commandButton class="btn btn-primary" value="Connexion" action="#{authentController.authenti()}"/>
+                            </div>
+                        </div>
                     </h:form>
-                </div>
-
-        
-
+                        </div>
+                    </div>
     </h:body>
 </html>

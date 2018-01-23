@@ -1,9 +1,16 @@
 package dao.util;
 
+import bean.AdressesFacade;
+import bean.FacturationFacade;
+import bean.UserAdresseFacade;
 import entity.Users;
 import dao.util.util.JsfUtil;
 import dao.util.util.PaginationHelper;
 import bean.UsersFacade;
+import entity.Adresses;
+import entity.Facturation;
+import entity.UserAdresse;
+import entity.UserAdressePK;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -23,9 +30,17 @@ import javax.faces.model.SelectItem;
 public class UsersController implements Serializable {
 
     private Users current;
+    private Adresses adr;
+    private Facturation fact;
     private DataModel items = null;
     @EJB
     private UsersFacade ejbFacade;
+    @EJB
+    private AdressesFacade adrFacede;
+    @EJB
+    private FacturationFacade factFacade;
+    @EJB
+    private UserAdresseFacade usadFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -38,6 +53,20 @@ public class UsersController implements Serializable {
             selectedItemIndex = -1;
         }
         return current;
+    }
+    
+    public Adresses getSelectedAdresse(){
+        if(adr == null) {
+            adr = new Adresses();
+        }
+        return adr;
+    }
+    
+    public Facturation getSelectedFactur(){
+        if(fact == null) {
+            fact = new Facturation();
+        }
+        return fact;
     }
 
     private UsersFacade getFacade() {
@@ -81,6 +110,14 @@ public class UsersController implements Serializable {
 
     public String create() {
         try {
+            adrFacede.create(adr);
+            factFacade.create(fact);
+            // ______TODO
+            //UserAdresse usad = new UserAdresse();
+            //usad.setDefaultAdr(Short.parseShort("1"));
+            //usad.setUserAdressePK(new UserAdressePK(current.getIdusers(), adr.getIdadresse()));
+            //usadFacade.create(usad);
+            //current.getFacturationList().add(fact);
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UsersCreated"));
             return prepareCreate();
