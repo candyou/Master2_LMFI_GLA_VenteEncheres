@@ -144,8 +144,12 @@ public class ArticlesController implements Serializable {
 
     public String update() {
         try {
+            if(current.getDateLimite().before(new Date())){
+                current.setCategorieList(checkedcategories);
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArticlesUpdated"));
+            }
+            else JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("Vous ne pouvez pas modifier avant la date limite"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

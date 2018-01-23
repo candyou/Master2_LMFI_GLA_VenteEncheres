@@ -49,9 +49,11 @@
                                 <h:outputText value="#{bundle.ListArticlesTitle_dateLimite}"/>
                             </f:facet>
                             <h:outputText value="#{item.dateLimite}">
-                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                             </h:outputText>
-                        </h:column>
+                            
+                        </h:column>       
+                       
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>

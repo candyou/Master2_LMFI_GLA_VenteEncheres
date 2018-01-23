@@ -27,6 +27,11 @@
                     <h:outputText value="#{articlesController.selected.dateLimite}" title="#{bundle.ViewArticlesTitle_dateLimite}">
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                     </h:outputText>
+                     <h:selectManyCheckbox value="#{articlesController.checkedcategories}">
+                        <f:selectItems value="#{articlesController.catFacade.findAll()}" 
+                                       var="elem" itemLabel="#{elem}" />
+   			
+   		</h:selectManyCheckbox>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{articlesController.destroyAndView}" value="#{bundle.ViewArticlesDestroyLink}"/>
