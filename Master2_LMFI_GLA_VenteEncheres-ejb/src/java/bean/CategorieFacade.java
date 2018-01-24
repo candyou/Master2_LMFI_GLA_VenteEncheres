@@ -6,9 +6,12 @@
 package bean;
 
 import entity.Categorie;
+import entity.Users;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -28,5 +31,20 @@ public class CategorieFacade extends AbstractFacade<Categorie> {
     public CategorieFacade() {
         super(Categorie.class);
     }
+      public List<String> selectCategories(){
+        TypedQuery<String> s = em.createNamedQuery("Categories.selectstringcategories",String.class);
+             List<String> results = s.getResultList();
+
+        return results;
+    } 
+      
+      
+      public Categorie categoriesbyname(String nomCat){
+        Categorie list = em.createNamedQuery("Categories.categoriesbyname",Categorie.class)
+                .setParameter("nomCat", nomCat).getSingleResult();
+          
+
+        return list;
+    } 
     
 }

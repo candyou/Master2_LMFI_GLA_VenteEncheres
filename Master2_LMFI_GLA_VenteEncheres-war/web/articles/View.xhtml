@@ -9,30 +9,50 @@
         <ui:define name="title">
             <h:outputText value="#{bundle.ViewArticlesTitle}"></h:outputText>
         </ui:define>
-        <ui:define name="body">
+        <ui:define name="container">
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewArticlesLabel_idarticle}"/>
-                    <h:outputText value="#{articlesController.selected.idarticle}" title="#{bundle.ViewArticlesTitle_idarticle}"/>
-                    <h:outputText value="#{bundle.ViewArticlesLabel_nomArticle}"/>
-                    <h:outputText value="#{articlesController.selected.nomArticle}" title="#{bundle.ViewArticlesTitle_nomArticle}"/>
-                    <h:outputText value="#{bundle.ViewArticlesLabel_description}"/>
-                    <h:outputText value="#{articlesController.selected.description}" title="#{bundle.ViewArticlesTitle_description}"/>
-                    <h:outputText value="#{bundle.ViewArticlesLabel_prixDepart}"/>
-                    <h:outputText value="#{articlesController.selected.prixDepart}" title="#{bundle.ViewArticlesTitle_prixDepart}"/>
-                    <h:outputText value="#{bundle.ViewArticlesLabel_dateLimite}"/>
-                    <h:outputText value="#{articlesController.selected.dateLimite}" title="#{bundle.ViewArticlesTitle_dateLimite}">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            <h:form styleClass="form-horizontal">
+                <legend><center><h2><b>Information de votre Article  #{articlesController.selected.nomArticle}</b></h2></center></legend><br/>
+                
+                      <div class="col-lg-6">
+                    <div class="control-group">
+                            <label class="control-label" for="id">ID</label>
+                    <h:outputText value="#{articlesController.selected.idarticle}" title="#{bundle.ViewArticlesTitle_idarticle}" class="form-control"/>
+                    </div>
+                    
+                    <div class="control-group">
+                            <label class="control-label" for="id">Nom d'article</label>
+                               <h:outputText value="#{articlesController.selected.nomArticle}" title="#{bundle.ViewArticlesTitle_nomArticle}" class="form-control"/>
+                    </div>
+                        
+                    <div class="control-group">
+                            <label class="control-label" for="id">Description</label>
+                     <h:outputText value="#{articlesController.selected.description}" title="#{bundle.ViewArticlesTitle_description}" class="form-control"/>
+                    </div>
+                          
+                    <div class="control-group">
+                            <label class="control-label" for="id">Prix depart</label>
+                      <h:outputText value="#{articlesController.selected.prixDepart}" title="#{bundle.ViewArticlesTitle_prixDepart}" class="form-control"/>
+                   
+                    </div>
+                    
+                    <div class="control-group">
+                            <label class="control-label" for="id">Date limite</label>
+                     <h:outputText value="#{articlesController.selected.dateLimite}" title="#{bundle.ViewArticlesTitle_dateLimite}" class="form-control">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                     </h:outputText>
-                     <h:selectManyCheckbox value="#{articlesController.checkedcategories}">
-                        <f:selectItems value="#{articlesController.catFacade.findAll()}" 
-                                       var="elem" itemLabel="#{elem}" />
-   			
-   		</h:selectManyCheckbox>
-                </h:panelGrid>
+                    </div>
+                    <div class="control-group">
+                            <label class="control-label" for="id">Categories de votre article</label>
+                    <div class="form-control">
+                    <ui:repeat value="#{articlesController.selected.categorieList}" var="cat" >
+                          <h:outputText value="#{cat.nomCat}" />
+                          <h:outputText value="   "/>
+                          </ui:repeat>
+                    </div>
+                    </div>
                 <br />
                 <h:commandLink action="#{articlesController.destroyAndView}" value="#{bundle.ViewArticlesDestroyLink}"/>
                 <br />
@@ -45,7 +65,7 @@
                 <br />
                 <br />
                 <h:link outcome="/index" value="#{bundle.ViewArticlesIndexLink}"/>
-
+                              </div>
             </h:form>
         </ui:define>
     </ui:composition>
