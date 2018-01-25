@@ -6,6 +6,7 @@ import dao.util.util.PaginationHelper;
 import bean.*;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -152,7 +153,12 @@ public class ArticlesController implements Serializable {
     public String update() {
         try {
              listcategories=new Vector<>();
-            if(current.getDateLimite().before(new Date())){
+             ZonedDateTime zdt = ZonedDateTime.now().plusHours(1);
+
+             java.util.Date date = java.util.Date.from( zdt.toInstant() );
+
+            if(current.getDateLimite().before(date)){
+                System.out.println("dao.util.ArticlesController.update()" + current.getDateLimite() + date);
                   for(String cat : checkedcategories){
                 listcategories.add(catFacade.categoriesbyname(cat));
             }

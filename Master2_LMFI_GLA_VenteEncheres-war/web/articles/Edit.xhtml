@@ -22,25 +22,25 @@
                      <h:inputText id="idarticle" value="#{articlesController.selected.idarticle}" title="#{bundle.EditArticlesTitle_idarticle}" required="true" requiredMessage="#{bundle.EditArticlesRequiredMessage_idarticle}" class="form-control"/>
                     </div>
                     <div class="control-group">
-                            <label class="control-label" for="id">ID</label>
+                            <label class="control-label" for="nomarticle">Nom Article</label>
                          <h:inputText id="nomArticle" value="#{articlesController.selected.nomArticle}" title="#{bundle.EditArticlesTitle_nomArticle}" class="form-control"/>
                     </div>
                     <div class="control-group">
-                            <label class="control-label" for="id">ID</label>
+                            <label class="control-label" for="description">Description</label>
                          <h:inputText id="description" value="#{articlesController.selected.description}" title="#{bundle.EditArticlesTitle_description}" class="form-control"/>
                     </div>
                     <div class="control-group">
-                            <label class="control-label" for="id">ID</label>
+                            <label class="control-label" for="prixdepart">Prix depart</label>
                               <h:inputText id="prixDepart" value="#{articlesController.selected.prixDepart}" title="#{bundle.EditArticlesTitle_prixDepart}" class="form-control"/>
                     </div>
                     <div class="control-group">
-                            <label class="control-label" for="id">ID</label>
+                            <label class="control-label" for="datelimite">Date limite</label>
                               <h:inputText id="dateLimite" value="#{articlesController.selected.dateLimite}" title="#{bundle.EditArticlesTitle_dateLimite}" class="form-control">
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                     </h:inputText>
                     </div>
-                                              <div class="control-group">
-                            <label class="control-label" for="categories">Categories ( Par defaut la categorie sera dans Autres)</label>
+                    <div class="control-group">
+                           <label class="control-label" for="categories">Categories ( Par defaut la categorie sera dans Autres)</label>
                     <h:selectManyCheckbox value="#{articlesController.checkedcategories}" class="form-control">
                         <f:selectItems value="#{articlesController.catFacade.selectCategories()}" 
                                        var="elem" itemLabel="#{elem}" />
