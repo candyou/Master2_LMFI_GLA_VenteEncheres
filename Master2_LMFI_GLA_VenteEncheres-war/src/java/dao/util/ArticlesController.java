@@ -6,6 +6,7 @@ import dao.util.util.PaginationHelper;
 import bean.*;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -35,13 +36,13 @@ public class ArticlesController implements Serializable {
     private UsersFacade userFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    private List<Categorie> checkedcategories;
-
-    public List<Categorie> getCheckedcategories() {
+    private List<String> checkedcategories;
+    private List<Categorie> listcategories;
+    public List<String> getCheckedcategories() {
         return checkedcategories;
     }
 
-    public void setCheckedcategories(List<Categorie> checkedcategories) {
+    public void setCheckedcategories(List<String> checkedcategories) {
         this.checkedcategories = checkedcategories;
     }
 
@@ -112,8 +113,8 @@ public class ArticlesController implements Serializable {
             UserArticle ua = new UserArticle();
            
            List<UserArticle> listuserarticles = new Vector<>();
-          Users u = userFacade.find(1);
-            UserArticlePK upk=new UserArticlePK(u.getIdusers(), current.getIdarticle());
+          Users u = userFacade.find(1);// recuperer id de l'utilisateur connecter
+           UserArticlePK upk=new UserArticlePK(u.getIdusers(), current.getIdarticle());
         
            ua.setUserArticlePK(upk);
            
@@ -123,7 +124,14 @@ public class ArticlesController implements Serializable {
           //  uaFacade.create(ua);
            ua.setDateCreate(new Date());
             listuserarticles.add(ua);
-              current.setCategorieList(checkedcategories);
+            listcategories=new Vector<>();
+            if(checkedcategories.size()==0)checkedcategories.add("Autres");
+            for(String cat : checkedcategories){
+                listcategories.add(catFacade.categoriesbyname(cat));
+            }
+            
+            System.out.println("dao.util.ArticlesController.create()"+listcategories.get(0).getNomCat());
+              current.setCategorieList(listcategories);
         //  current.setUserArticleList(listuserarticles);
   
             getFacade().create(current);
@@ -144,12 +152,21 @@ public class ArticlesController implements Serializable {
 
     public String update() {
         try {
-            if(current.getDateLimite().before(new Date())){
-                current.setCategorieList(checkedcategories);
+             listcategories=new Vector<>();
+             ZonedDateTime zdt = ZonedDateTime.now().plusHours(1);
+
+             java.util.Date date = java.util.Date.from( zdt.toInstant() );
+
+            if(current.getDateLimite().before(date)){
+                System.out.println("dao.util.ArticlesController.update()" + current.getDateLimite() + date);
+                  for(String cat : checkedcategories){
+                listcategories.add(catFacade.categoriesbyname(cat));
+            }
+                current.setCategorieList(listcategories);   
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArticlesUpdated"));
-            }
-            else JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("Vous ne pouvez pas modifier avant la date limite"));
+           }
+            else JsfUtil.addErrorMessage("Vous ne pouvez pas modifier avant la date limite");
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

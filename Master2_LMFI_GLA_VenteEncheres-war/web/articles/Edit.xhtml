@@ -9,32 +9,45 @@
         <ui:define name="title">
             <h:outputText value="#{bundle.EditArticlesTitle}"></h:outputText>
         </ui:define>
-        <ui:define name="body">
+        <ui:define name="container">
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditArticlesLabel_idarticle}" for="idarticle" />
-                    <h:inputText id="idarticle" value="#{articlesController.selected.idarticle}" title="#{bundle.EditArticlesTitle_idarticle}" required="true" requiredMessage="#{bundle.EditArticlesRequiredMessage_idarticle}"/>
-                    <h:outputLabel value="#{bundle.EditArticlesLabel_nomArticle}" for="nomArticle" />
-                    <h:inputText id="nomArticle" value="#{articlesController.selected.nomArticle}" title="#{bundle.EditArticlesTitle_nomArticle}" />
-                    <h:outputLabel value="#{bundle.EditArticlesLabel_description}" for="description" />
-                    <h:inputText id="description" value="#{articlesController.selected.description}" title="#{bundle.EditArticlesTitle_description}" />
-                    <h:outputLabel value="#{bundle.EditArticlesLabel_prixDepart}" for="prixDepart" />
-                    <h:inputText id="prixDepart" value="#{articlesController.selected.prixDepart}" title="#{bundle.EditArticlesTitle_prixDepart}" />
-                    <h:outputLabel value="#{bundle.EditArticlesLabel_dateLimite}" for="dateLimite" />
-                    <h:inputText id="dateLimite" value="#{articlesController.selected.dateLimite}" title="#{bundle.EditArticlesTitle_dateLimite}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+            <h:form styleClass="form-horizontal">
+                <legend><center><h2><b>Modifier de votre Article #{articlesController.selected.nomArticle} </b></h2></center></legend><br/>
+             
+                     <div class="col-lg-6">
+                    <div class="control-group">
+                            <label class="control-label" for="id">ID</label>
+                     <h:inputText id="idarticle" value="#{articlesController.selected.idarticle}" title="#{bundle.EditArticlesTitle_idarticle}" required="true" requiredMessage="#{bundle.EditArticlesRequiredMessage_idarticle}" class="form-control"/>
+                    </div>
+                    <div class="control-group">
+                            <label class="control-label" for="nomarticle">Nom Article</label>
+                         <h:inputText id="nomArticle" value="#{articlesController.selected.nomArticle}" title="#{bundle.EditArticlesTitle_nomArticle}" class="form-control"/>
+                    </div>
+                    <div class="control-group">
+                            <label class="control-label" for="description">Description</label>
+                         <h:inputText id="description" value="#{articlesController.selected.description}" title="#{bundle.EditArticlesTitle_description}" class="form-control"/>
+                    </div>
+                    <div class="control-group">
+                            <label class="control-label" for="prixdepart">Prix depart</label>
+                              <h:inputText id="prixDepart" value="#{articlesController.selected.prixDepart}" title="#{bundle.EditArticlesTitle_prixDepart}" class="form-control"/>
+                    </div>
+                    <div class="control-group">
+                            <label class="control-label" for="datelimite">Date limite</label>
+                              <h:inputText id="dateLimite" value="#{articlesController.selected.dateLimite}" title="#{bundle.EditArticlesTitle_dateLimite}" class="form-control">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                     </h:inputText>
-                   
-                             <h:selectManyCheckbox value="#{articlesController.checkedcategories}">
-                        <f:selectItems value="#{articlesController.catFacade.findAll()}" 
+                    </div>
+                    <div class="control-group">
+                           <label class="control-label" for="categories">Categories ( Par defaut la categorie sera dans Autres)</label>
+                    <h:selectManyCheckbox value="#{articlesController.checkedcategories}" class="form-control">
+                        <f:selectItems value="#{articlesController.catFacade.selectCategories()}" 
                                        var="elem" itemLabel="#{elem}" />
+                
    			
-   		             </h:selectManyCheckbox>
-                       
-                </h:panelGrid>
+   		</h:selectManyCheckbox>
+                </div>
                 <h:commandLink action="#{articlesController.update}" value="#{bundle.EditArticlesSaveLink}"/>
                 <br />
                 <br />
@@ -43,8 +56,11 @@
                 <h:commandLink action="#{articlesController.prepareList}" value="#{bundle.EditArticlesShowAllLink}" immediate="true"/>
                 <br />
                 <br />
+              
                 <h:link outcome="/index" value="#{bundle.EditArticlesIndexLink}" />
+                               </div>
             </h:form>
+            
         </ui:define>
     </ui:composition>
 
