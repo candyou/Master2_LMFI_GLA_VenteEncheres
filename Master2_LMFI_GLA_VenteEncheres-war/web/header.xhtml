@@ -28,7 +28,18 @@
                       <li><a href="#about">Mes Enchère</a></li>
                       <li><a href="#contact">Contact</a></li>
                     </ul>
+                      <ul class="nav navbar-nav navbar-right">
+                        <li class="nav-item">
+                            <span class="navbar-brand">Bonjour, #{authentController.connecteduser()} !</span>
+                        </li>
+                        <li class="nav-item">
+                                <h:form>
+                                    <span class="navbar-brand"> <h:commandLink class="nav-link" action="#{authentController.logout()}">Déconnexion</h:commandLink></span>
+                                </h:form>
+                        </li>
+                      </ul>
                   </div><!--/.nav-collapse -->
+                  
                 </div>
               </nav>
             

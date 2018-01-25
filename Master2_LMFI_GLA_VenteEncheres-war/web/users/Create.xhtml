@@ -19,10 +19,6 @@
                     <legend><center><h2><b>Inscription</b></h2></center></legend><br/>
                     <div class="col-lg-6">
                     <div class="control-group">
-                            <label class="control-label" for="id">ID</label>
-                            <h:inputText id="idusers" value="#{usersController.selected.idusers}" title="#{bundle.CreateUsersTitle_idusers}" required="true" requiredMessage="#{bundle.CreateUsersRequiredMessage_idusers}" class="form-control"/>
-                    </div>
-                    <div class="control-group">
                         <label class="control-label" for="nom">Nom</label>
                         <h:inputText id="nom" value="#{usersController.selected.nom}" title="#{bundle.CreateUsersTitle_nom}" class="form-control"/>
                     </div>
@@ -76,10 +72,10 @@
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="mdp">Mot de passe</label>
-                        <h:inputText id="mdp" value="#{usersController.selected.mdp}" title="#{bundle.CreateUsersTitle_mdp}" class="form-control"/>
+                        <h:inputSecret id="mdp" value="#{usersController.selected.mdp}" title="#{bundle.CreateUsersTitle_mdp}" class="form-control"/>
                     </div>
                 <br />
-                <h:commandLink action="#{usersController.create}" value="#{bundle.CreateUsersSaveLink}" />
+                 <h:commandButton class="btn btn-primary" value="S'inscrire" action="#{usersController.create}"/>
                 <br />
                 <br />
                 <h:commandLink action="#{usersController.prepareList}" value="#{bundle.CreateUsersShowAllLink}" immediate="true"/>

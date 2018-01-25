@@ -111,15 +111,17 @@ public class UsersController implements Serializable {
     public String create() {
         try {
             adrFacede.create(adr);
-            factFacade.create(fact);
-            // ______TODO
-            //UserAdresse usad = new UserAdresse();
-            //usad.setDefaultAdr(Short.parseShort("1"));
-            //usad.setUserAdressePK(new UserAdressePK(current.getIdusers(), adr.getIdadresse()));
-            //usadFacade.create(usad);
-            //current.getFacturationList().add(fact);
             getFacade().create(current);
+            UserAdresse usad = new UserAdresse();
+            // Default Adresse
+            usad.setDefaultAdr(Short.parseShort("1"));
+            usad.setUserAdressePK(new UserAdressePK(current.getIdusers(), adr.getIdadresse()));   
+            usadFacade.create(usad);
+            fact.setIdUser(current);
+            factFacade.create(fact);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("UsersCreated"));
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("idUser", current.getIdusers());
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", current.getLogin());
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

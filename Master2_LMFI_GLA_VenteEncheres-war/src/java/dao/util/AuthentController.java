@@ -25,17 +25,27 @@ public class AuthentController {
     private String login;
     private String password;
     private Users user;
-    
+    private String connecteduser;
     public String authenti(){
         user = userBean.findByUsernameAndPass(login, password);
         System.out.println("dao.util.AuthentController.authenti()"+user);
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", user.getIdusers());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("iduser", user.getIdusers());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", user.getLogin());
+        connecteduser = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username").toString();
+        System.out.println("-----------------" + connecteduser);
         return "index?faces-redirect=true";
     }
+    
     
     public String logout(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "login?faces-redirect=true";
+    }
+    
+    public String connecteduser(){
+        if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username").toString() == null)
+            return "";
+        return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username").toString();
     }
 
     public String getLogin() {
@@ -52,6 +62,14 @@ public class AuthentController {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConnecteduser() {
+        return connecteduser;
+    }
+
+    public void setConnecteduser(String connecteduser) {
+        this.connecteduser = connecteduser;
     }
     
     
