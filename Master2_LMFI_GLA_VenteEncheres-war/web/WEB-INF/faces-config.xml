@@ -8,5 +8,12 @@
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+        <lifecycle>
+        <phase-listener>security.AuthorizationListener</phase-listener>
+        </lifecycle>
     </application>
 </faces-config>

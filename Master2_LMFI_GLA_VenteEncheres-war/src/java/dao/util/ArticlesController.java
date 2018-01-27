@@ -34,6 +34,8 @@ public class ArticlesController implements Serializable {
     private CategorieFacade catFacade;
     @EJB 
     private UsersFacade userFacade;
+    @EJB
+    private ParticipeEnchFacade partFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<String> checkedcategories;
@@ -52,6 +54,10 @@ public class ArticlesController implements Serializable {
 
     public void setCatFacade(CategorieFacade catFacade) {
         this.catFacade = catFacade;
+    }
+    
+    public List<Articles> getAllArt(){
+        return ejbFacade.findAll();
     }
     
     
@@ -100,6 +106,12 @@ public class ArticlesController implements Serializable {
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
+    
+    public String prepareViewId(int id) {
+        current = (Articles) ejbFacade.find(id);
+        //selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        return "View";
+    }
 
     public String prepareCreate() {
         current = new Articles();
@@ -113,7 +125,8 @@ public class ArticlesController implements Serializable {
             UserArticle ua = new UserArticle();
            
            List<UserArticle> listuserarticles = new Vector<>();
-          Users u = userFacade.find(1);// recuperer id de l'utilisateur connecter
+           
+          Users u = userFacade.find(14);// recuperer id de l'utilisateur connecter
            UserArticlePK upk=new UserArticlePK(u.getIdusers(), current.getIdarticle());
         
            ua.setUserArticlePK(upk);
@@ -257,6 +270,13 @@ public class ArticlesController implements Serializable {
 
     public Articles getArticles(java.lang.Integer id) {
         return ejbFacade.find(id);
+    }
+    
+    public List<ParticipeEnch> getParti(int idArticle){
+            return partFacade.getPartByArti(idArticle);
+        }
+    public double getPrixMax(int idArticle){
+        return partFacade.getMaxProp(idArticle);
     }
 
     @FacesConverter(forClass = Articles.class)

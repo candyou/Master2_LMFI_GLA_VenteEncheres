@@ -7,8 +7,10 @@ package dao.util;
 
 import bean.UsersFacade;
 import entity.Users;
+import java.io.IOException;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
@@ -28,18 +30,21 @@ public class AuthentController {
     private String connecteduser;
     public String authenti(){
         user = userBean.findByUsernameAndPass(login, password);
+        if (user != null){
         System.out.println("dao.util.AuthentController.authenti()"+user);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("iduser", user.getIdusers());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("username", user.getLogin());
         connecteduser = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("username").toString();
         System.out.println("-----------------" + connecteduser);
+        }
         return "index?faces-redirect=true";
     }
     
     
-    public String logout(){
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "login?faces-redirect=true";
+    public void logout()throws IOException {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+    ec.invalidateSession();
+    ec.redirect(ec.getRequestContextPath() + "/login.xhtml");
     }
     
     public String connecteduser(){

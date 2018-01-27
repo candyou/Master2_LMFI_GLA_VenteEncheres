@@ -13,20 +13,20 @@
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
+            <div class="panel panel-primary" style="margin:20px;">
+            <div class="panel-heading">
+              <h3 class="panel-title">Ajouter un nouveau article</h3>
+            </div>
+                <div class="panel-body">
+                <div class="container-fluid">
             <h:form styleClass="form-horizontal">
-                <legend><center><h2><b>Ajouter un Article en enchere</b></h2></center></legend><br/>
-                    <div class="col-lg-6">
-                    <div class="control-group">
+                <div class="control-group">
                             <label class="control-label" for="id">ID</label>
                     <h:inputText id="idarticle" value="#{articlesController.selected.idarticle}" title="#{bundle.CreateArticlesTitle_idarticle}" required="true" requiredMessage="#{bundle.CreateArticlesRequiredMessage_idarticle}" class="form-control"/>
                 </div>
-                     <div class="control-group">
+                <div class="control-group">
                             <label class="control-label" for="nomarticle">Nom d'article</label>
                     <h:inputText id="nomArticle" value="#{articlesController.selected.nomArticle}" title="#{bundle.CreateArticlesTitle_nomArticle}"  class="form-control"/>
-                </div>
-                     <div class="control-group">
-                            <label class="control-label" for="description">Description</label>
-                    <h:inputText id="description" value="#{articlesController.selected.description}" title="#{bundle.CreateArticlesTitle_description}" class="form-control"/>
                 </div>
                      <div class="control-group">
                             <label class="control-label" for="prixdepart">Prix de depart</label>
@@ -49,6 +49,10 @@
    			
    		</h:selectManyCheckbox>
                 </div>
+                <div class="control-group">
+                    <label class="control-label" for="description">Description</label>
+                    <h:inputText id="description" value="#{articlesController.selected.description}" title="#{bundle.CreateArticlesTitle_description}" class="form-control"/>
+                </div>
                  
                 <br />
                 <h:commandLink action="#{articlesController.create}" value="#{bundle.CreateArticlesSaveLink}" />
@@ -58,8 +62,10 @@
                 <br />
                 <br />
                 <h:link outcome="/index" value="#{bundle.CreateArticlesIndexLink}"/>
-                    </div>
             </h:form>
+                </div>
+                </div>
+                </div>
         </ui:define>
     </ui:composition>
 
