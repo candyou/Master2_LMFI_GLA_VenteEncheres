@@ -42,6 +42,16 @@ public class ArticlesController implements Serializable {
     private int selectedItemIndex;
     private List<String> checkedcategories;
     private List<Categorie> listcategories;
+    private Double prixprop;
+
+    public Double getPrixprop() {
+        return prixprop;
+    }
+
+    public void setPrixprop(Double prixprop) {
+        this.prixprop = prixprop;
+    }
+    
     public List<String> getCheckedcategories() {
         return checkedcategories;
     }
@@ -56,6 +66,22 @@ public class ArticlesController implements Serializable {
 
     public void setCatFacade(CategorieFacade catFacade) {
         this.catFacade = catFacade;
+    }
+
+    public ArticlesFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(ArticlesFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public ParticipeEnchFacade getPartienchFacade() {
+        return partienchFacade;
+    }
+
+    public void setPartienchFacade(ParticipeEnchFacade partienchFacade) {
+        this.partienchFacade = partienchFacade;
     }
     
     
@@ -106,8 +132,12 @@ public class ArticlesController implements Serializable {
          
          System.out.println("dao.util.ArticlesController.prepareListEnchere()");
          recreateModel();
+        
          items=new ListDataModel(ejbFacade.contraintelimite());
-         return "Search";
+         
+          if(ejbFacade.contraintelimite().size()>0)
+        return "Search";
+          else return null;
      }
     public String prepareView() {
         current = (Articles) getItems().getRowData();
@@ -116,6 +146,13 @@ public class ArticlesController implements Serializable {
         
         return "View";
     }
+     public String prepareParticiper() {
+        current = (Articles) getItems().getRowData();
+       
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+         System.out.println("dao.util.ArticlesController.prepareParticiper()");
+        return "Participer";
+    }
 
     
     
@@ -123,6 +160,16 @@ public class ArticlesController implements Serializable {
         current = new Articles();
         selectedItemIndex = -1;
         return "Create";
+    }
+    public String participe(){
+        ParticipeEnch p = new ParticipeEnch(1, prixprop, Short.parseShort("1"), Short.parseShort("0"), current, userFacade.find(1));
+        getPartienchFacade().create(p);
+          recreateModel();
+          items=new ListDataModel(ejbFacade.contraintelimite());
+         System.out.println("dao.util.ArticlesController.participe()");
+          if(ejbFacade.contraintelimite().size()>0)
+        return "Search";
+          else return null;
     }
 
     public String create() {

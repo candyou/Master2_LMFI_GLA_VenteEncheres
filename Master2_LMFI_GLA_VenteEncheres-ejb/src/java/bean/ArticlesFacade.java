@@ -43,7 +43,6 @@ public class ArticlesFacade extends AbstractFacade<Articles> {
          Date d = new Date();
           Query query = em.createNamedQuery("Articles.contrainte");
         query.setParameter("dateLimite",d);
-         System.out.println("bean.ArticlesFacade.contraintelimite()" + d);
         return query.getResultList();
      }
 }
