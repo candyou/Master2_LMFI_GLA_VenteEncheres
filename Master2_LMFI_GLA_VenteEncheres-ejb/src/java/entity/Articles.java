@@ -6,6 +6,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -36,9 +38,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "articles")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Articles.findAll", query = "SELECT a FROM Articles a")
+    @NamedQuery(name = "Articles.findAll", query = "SELECT a FROM Articles a"),
+      @NamedQuery(name = "Articles.contrainte", query = "SELECT a FROM Articles a WHERE a.dateLimite  > :dateLimite") 
     , @NamedQuery(name = "Articles.findByIdarticle", query = "SELECT a FROM Articles a WHERE a.idarticle = :idarticle")
-    , @NamedQuery(name = "Articles.findByNomArticle", query = "SELECT a FROM Articles a WHERE a.nomArticle = :nomArticle")
+    , @NamedQuery(name = "Articles.findByNomArticle", query = "SELECT a FROM Articles a WHERE a.nomArticle = :nomArticle AND a.dateLimite  > :dateLimite")
     , @NamedQuery(name = "Articles.findByDescription", query = "SELECT a FROM Articles a WHERE a.description = :description")
     , @NamedQuery(name = "Articles.findByPrixDepart", query = "SELECT a FROM Articles a WHERE a.prixDepart = :prixDepart")
     , @NamedQuery(name = "Articles.findByDateLimite", query = "SELECT a FROM Articles a WHERE a.dateLimite = :dateLimite")})
@@ -71,6 +74,7 @@ public class Articles implements Serializable {
     private List<UserArticle> userArticleList;
 
     public Articles() {
+       
     }
 
     public Articles(Integer idarticle) {
@@ -128,6 +132,7 @@ public class Articles implements Serializable {
 
     @XmlTransient
     public List<ParticipeEnch> getParticipeEnchList() {
+        sortbyvalue();
         return participeEnchList;
     }
 
@@ -169,4 +174,15 @@ public class Articles implements Serializable {
         return "entity.Articles[ idarticle=" + idarticle + " ]";
     }
     
+    public void sortbyvalue(){
+        Collections.sort(participeEnchList, new Comparator<ParticipeEnch>() {
+        @Override
+        public int compare(ParticipeEnch p1, ParticipeEnch p2)
+        {
+
+            return  p2.getPrixProp().compareTo(p1.getPrixProp());
+        }
+    });
+    }
 }
+        

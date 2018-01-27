@@ -11,17 +11,18 @@
       
     </head>
     <ui:composition template="/template.xhtml">
-       
+        
+        
         
         <ui:define name="title">
-            <h:outputText value="Liste des articles"></h:outputText>
+            <h:outputText value="Recherche des articles"></h:outputText>
         </ui:define>
         
         <ui:define name="container">
             <h:form styleClass="jsfcrud_list_form">
-                <div class="card">
-                    
-                </div>
+                <h:inputText value="#{articlesController.selected.nomArticle}" />
+       <h:commandButton value="Recherche par nom" action="#{articlesController.searchByName}"></h:commandButton>
+        
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
@@ -75,6 +76,13 @@
                           <h:outputText value="   "/>
                           </ui:repeat>
                         </h:column>
+                        <h:column>
+                              <f:facet name="header">
+                                <h:outputText value="Prix maximal enchere"/>
+                            </f:facet>
+                            <h:outputText value="#{item.participeEnchList[0].prixProp}"/>
+                        
+                        </h:column>
                        
                         <h:column>
                             <f:facet name="header">
@@ -82,9 +90,7 @@
                             </f:facet>
                             <h:commandLink action="#{articlesController.prepareView}" value="#{bundle.ListArticlesViewLink}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{articlesController.prepareEdit}" value="#{bundle.ListArticlesEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{articlesController.destroy}" value="#{bundle.ListArticlesDestroyLink}"/>
+                           
                         </h:column>
               
                     </h:dataTable>
@@ -94,9 +100,10 @@
                 <br />
                 <br />
                 <h:link outcome="/index" value="#{bundle.ListArticlesIndexLink}"/>
-                <h:commandLink action="#{articlesController.prepareListEnchere()}" value="Recherche des articles" immediate="true"/>
+                 <h:commandLink action="#{articlesController.prepareList}" value="#{bundle.CreateArticlesShowAllLink}" immediate="true"/>
            
             </h:form>
+               
         </ui:define>
     </ui:composition>
 

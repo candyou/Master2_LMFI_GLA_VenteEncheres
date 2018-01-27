@@ -30,11 +30,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "participe_ench")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ParticipeEnch.findAll", query = "SELECT p FROM ParticipeEnch p")
-    , @NamedQuery(name = "ParticipeEnch.findByIdpartEnch", query = "SELECT p FROM ParticipeEnch p WHERE p.idpartEnch = :idpartEnch")
-    , @NamedQuery(name = "ParticipeEnch.findByPrixProp", query = "SELECT p FROM ParticipeEnch p WHERE p.prixProp = :prixProp")
-    , @NamedQuery(name = "ParticipeEnch.findByEtatParticip", query = "SELECT p FROM ParticipeEnch p WHERE p.etatParticip = :etatParticip")
-    , @NamedQuery(name = "ParticipeEnch.findByEtatAchat", query = "SELECT p FROM ParticipeEnch p WHERE p.etatAchat = :etatAchat")})
+    @NamedQuery(name = "ParticipeEnch.findAll", query = "SELECT p FROM ParticipeEnch p  ORDER BY p.prixProp ASC")
+    , @NamedQuery(name = "ParticipeEnch.findByIdpartEnch", query = "SELECT p FROM ParticipeEnch p WHERE p.idpartEnch = :idpartEnch ORDER BY p.prixProp ASC")
+    , @NamedQuery(name = "ParticipeEnch.findByPrixProp", query = "SELECT p FROM ParticipeEnch p WHERE p.prixProp = :prixProp ORDER BY p.prixProp ASC")
+    , @NamedQuery(name = "ParticipeEnch.findByEtatParticip", query = "SELECT p FROM ParticipeEnch p WHERE p.etatParticip = :etatParticip ORDER BY p.prixProp ASC")
+    , @NamedQuery(name = "ParticipeEnch.findByEtatAchat", query = "SELECT p FROM ParticipeEnch p WHERE p.etatAchat = :etatAchat ORDER BY p.prixProp ASC")})
 public class ParticipeEnch implements Serializable {
 
     private static final long serialVersionUID = 1L;

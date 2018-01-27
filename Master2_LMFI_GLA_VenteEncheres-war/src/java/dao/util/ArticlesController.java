@@ -7,6 +7,8 @@ import bean.*;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -34,6 +36,8 @@ public class ArticlesController implements Serializable {
     private CategorieFacade catFacade;
     @EJB 
     private UsersFacade userFacade;
+    @EJB
+    private ParticipeEnchFacade partienchFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<String> checkedcategories;
@@ -91,16 +95,30 @@ public class ArticlesController implements Serializable {
     }
 
     public String prepareList() {
+        
+    
         recreateModel();
+         items=new ListDataModel(ejbFacade.findAll());
+         System.out.println("dao.util.ArticlesController.prepareList()");
         return "List";
     }
-
+    public String prepareListEnchere(){
+         
+         System.out.println("dao.util.ArticlesController.prepareListEnchere()");
+         recreateModel();
+         items=new ListDataModel(ejbFacade.contraintelimite());
+         return "Search";
+     }
     public String prepareView() {
         current = (Articles) getItems().getRowData();
+       
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        
         return "View";
     }
 
+    
+    
     public String prepareCreate() {
         current = new Articles();
         selectedItemIndex = -1;
@@ -133,9 +151,7 @@ public class ArticlesController implements Serializable {
             System.out.println("dao.util.ArticlesController.create()"+listcategories.get(0).getNomCat());
               current.setCategorieList(listcategories);
         //  current.setUserArticleList(listuserarticles);
-  
             getFacade().create(current);
-            
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArticlesCreated"));
             return prepareCreate();
         } catch (Exception e) {
@@ -148,6 +164,13 @@ public class ArticlesController implements Serializable {
         current = (Articles) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
+    }
+    public String searchByName(){
+        System.out.println(current.getNomArticle()+ "here");
+        List<Articles> listArticles = ejbFacade.seachByName(current.getNomArticle());
+        System.out.println("dao.util.ArticlesController.searchByName()");
+        items = new ListDataModel(listArticles);
+        return "Search";
     }
 
     public String update() {
@@ -298,5 +321,6 @@ public class ArticlesController implements Serializable {
         }
 
     }
+   
 
 }
