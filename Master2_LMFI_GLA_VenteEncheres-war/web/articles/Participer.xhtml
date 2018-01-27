@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewArticlesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="container">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            
+            <h:form styleClass="form-horizontal">
+                <legend><center><h2><b>Information de votre Article </b></h2></center></legend><br/>
+                
+                      <div class="col-lg-6">
+                    <div class="control-group">
+                            <label class="control-label" for="id">ID</label>
+                    <h:outputText value="#{articlesController.selected.idarticle}" title="#{bundle.ViewArticlesTitle_idarticle}" class="form-control"/>
+                   
+                 </div>
+                    
+                    <div class="control-group">
+                            <label class="control-label" for="id">Nom d'article</label>
+                               <h:outputText value="#{articlesController.selected.nomArticle}" title="#{bundle.ViewArticlesTitle_nomArticle}" class="form-control"/>
+                    </div>
+                        
+                    <div class="control-group">
+                            <label class="control-label" for="id">Description</label>
+                     <h:outputText value="#{articlesController.selected.description}" title="#{bundle.ViewArticlesTitle_description}" class="form-control"/>
+                    </div>
+                          
+                    <div class="control-group">
+                            <label class="control-label" for="id">Prix depart</label>
+                      <h:outputText value="#{articlesController.selected.prixDepart}" title="#{bundle.ViewArticlesTitle_prixDepart}" class="form-control"/>
+                   
+                    </div>
+                    
+                    <div class="control-group">
+                            <label class="control-label" for="id">Date limite</label>
+                     <h:outputText value="#{articlesController.selected.dateLimite}" title="#{bundle.ViewArticlesTitle_dateLimite}" class="form-control">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    </div>
+                    <div class="control-group">
+                            <label class="control-label" for="id">Categories de votre article</label>
+                    <div class="form-control">
+                    <ui:repeat value="#{articlesController.selected.categorieList}" var="cat" >
+                          <h:outputText value="#{cat.nomCat}" />
+                          <h:outputText value="   "/>
+                          </ui:repeat>
+                    </div>
+                    </div>
+                <br />
+                <h:commandLink action="#{articlesController.destroyAndView}" value="#{bundle.ViewArticlesDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewArticlesEditLink}"/>
+                <br />
+                <h:commandLink action="#{articlesController.prepareCreate}" value="#{bundle.ViewArticlesCreateLink}" />
+                <br />
+                <h:commandLink action="#{articlesController.prepareList}" value="#{bundle.ViewArticlesShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewArticlesIndexLink}"/>
+                              </div>
+                
+                <span style="padding-left: 100px;">Participer à l'enchere </span  >
+                <h:inputText value="#{articlesController.prixprop}"  />
+                    
+                       <h:commandLink action="#{articlesController.participe}" value="Confirmer" />
+             
+                   
+            </h:form>
+                    
+                    
+                    
+        </ui:define>
+    </ui:composition>
+
+</html>

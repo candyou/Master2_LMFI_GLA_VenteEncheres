@@ -20,6 +20,7 @@
         
         <ui:define name="container">
             <h:form styleClass="jsfcrud_list_form">
+<<<<<<< HEAD
                 <div class="row">
                     <ui:repeat value="#{articlesController.allArt}" var="item">
                             <div class="col-sm-6 col-md-4">
@@ -44,7 +45,8 @@
                                 </div>
                                 </div>
                             </div>
-                        </ui:repeat> 
+                        </ui:repeat>
+                    <h:commandLink action="#{articlesController.prepareListEnchere()}" value="Recherche des articles" immediate="true"/>
                 </div>               
             </h:form>
         </ui:define>

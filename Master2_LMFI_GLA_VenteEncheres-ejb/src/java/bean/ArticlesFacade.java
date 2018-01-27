@@ -6,9 +6,12 @@
 package bean;
 
 import entity.Articles;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +32,17 @@ public class ArticlesFacade extends AbstractFacade<Articles> {
         super(Articles.class);
     }
     
+     public List<Articles> seachByName(String name){
+            Date d = new Date();
+         Query query = em.createNamedQuery("Articles.findByNomArticle");
+        query.setParameter("nomArticle",name);
+        query.setParameter("dateLimite", d);
+        return query.getResultList();
+    }
+     public List<Articles> contraintelimite(){
+         Date d = new Date();
+          Query query = em.createNamedQuery("Articles.contrainte");
+        query.setParameter("dateLimite",d);
+        return query.getResultList();
+     }
 }

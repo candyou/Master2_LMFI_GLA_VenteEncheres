@@ -64,9 +64,19 @@ public class ParticipeEnch implements Serializable {
     public ParticipeEnch() {
     }
 
+    public ParticipeEnch(Integer idpartEnch, Double prixProp, Short etatParticip, Short etatAchat, Articles idArticle, Users idUser) {
+        this.idpartEnch = idpartEnch;
+        this.prixProp = prixProp;
+        this.etatParticip = etatParticip;
+        this.etatAchat = etatAchat;
+        this.idArticle = idArticle;
+        this.idUser = idUser;
+    }
+    
     public ParticipeEnch(Integer idpartEnch) {
         this.idpartEnch = idpartEnch;
     }
+    
 
     public Integer getIdpartEnch() {
         return idpartEnch;

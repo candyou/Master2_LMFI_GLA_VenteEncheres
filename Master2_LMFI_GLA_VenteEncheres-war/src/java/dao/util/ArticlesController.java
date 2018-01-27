@@ -7,6 +7,8 @@ import bean.*;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -35,11 +37,21 @@ public class ArticlesController implements Serializable {
     @EJB 
     private UsersFacade userFacade;
     @EJB
-    private ParticipeEnchFacade partFacade;
+    private ParticipeEnchFacade partienchFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<String> checkedcategories;
     private List<Categorie> listcategories;
+    private Double prixprop;
+
+    public Double getPrixprop() {
+        return prixprop;
+    }
+
+    public void setPrixprop(Double prixprop) {
+        this.prixprop = prixprop;
+    }
+    
     public List<String> getCheckedcategories() {
         return checkedcategories;
     }
@@ -54,6 +66,22 @@ public class ArticlesController implements Serializable {
 
     public void setCatFacade(CategorieFacade catFacade) {
         this.catFacade = catFacade;
+    }
+
+    public ArticlesFacade getEjbFacade() {
+        return ejbFacade;
+    }
+
+    public void setEjbFacade(ArticlesFacade ejbFacade) {
+        this.ejbFacade = ejbFacade;
+    }
+
+    public ParticipeEnchFacade getPartienchFacade() {
+        return partienchFacade;
+    }
+
+    public void setPartienchFacade(ParticipeEnchFacade partienchFacade) {
+        this.partienchFacade = partienchFacade;
     }
     
     public List<Articles> getAllArt(){
@@ -97,26 +125,62 @@ public class ArticlesController implements Serializable {
     }
 
     public String prepareList() {
+        
+    
         recreateModel();
+         items=new ListDataModel(ejbFacade.findAll());
+         System.out.println("dao.util.ArticlesController.prepareList()");
         return "List";
     }
-
+    public String prepareListEnchere(){
+         
+         System.out.println("dao.util.ArticlesController.prepareListEnchere()");
+         recreateModel();
+        
+         items=new ListDataModel(ejbFacade.contraintelimite());
+         
+          if(ejbFacade.contraintelimite().size()>0)
+        return "Search";
+          else return null;
+     }
     public String prepareView() {
         current = (Articles) getItems().getRowData();
+       
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        
         return "View";
     }
+
     
     public String prepareViewId(int id) {
         current = (Articles) ejbFacade.find(id);
         //selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
+     public String prepareParticiper() {
+        current = (Articles) getItems().getRowData();
+       
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+         System.out.println("dao.util.ArticlesController.prepareParticiper()");
+        return "Participer";
+    }
 
+    
+    
     public String prepareCreate() {
         current = new Articles();
         selectedItemIndex = -1;
         return "Create";
+    }
+    public String participe(){
+        ParticipeEnch p = new ParticipeEnch(1, prixprop, Short.parseShort("1"), Short.parseShort("0"), current, userFacade.find(1));
+        getPartienchFacade().create(p);
+          recreateModel();
+          items=new ListDataModel(ejbFacade.contraintelimite());
+         System.out.println("dao.util.ArticlesController.participe()");
+          if(ejbFacade.contraintelimite().size()>0)
+        return "Search";
+          else return null;
     }
 
     public String create() {
@@ -146,9 +210,7 @@ public class ArticlesController implements Serializable {
             System.out.println("dao.util.ArticlesController.create()"+listcategories.get(0).getNomCat());
               current.setCategorieList(listcategories);
         //  current.setUserArticleList(listuserarticles);
-  
             getFacade().create(current);
-            
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArticlesCreated"));
             return prepareCreate();
         } catch (Exception e) {
@@ -161,6 +223,13 @@ public class ArticlesController implements Serializable {
         current = (Articles) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
+    }
+    public String searchByName(){
+        System.out.println(current.getNomArticle()+ "here");
+        List<Articles> listArticles = ejbFacade.seachByName(current.getNomArticle());
+        System.out.println("dao.util.ArticlesController.searchByName()");
+        items = new ListDataModel(listArticles);
+        return "Search";
     }
 
     public String update() {
@@ -273,10 +342,10 @@ public class ArticlesController implements Serializable {
     }
     
     public List<ParticipeEnch> getParti(int idArticle){
-            return partFacade.getPartByArti(idArticle);
+            return partienchFacade.getPartByArti(idArticle);
         }
     public double getPrixMax(int idArticle){
-        return partFacade.getMaxProp(idArticle);
+        return partienchFacade.getMaxProp(idArticle);
     }
 
     @FacesConverter(forClass = Articles.class)
@@ -318,5 +387,6 @@ public class ArticlesController implements Serializable {
         }
 
     }
+   
 
 }
