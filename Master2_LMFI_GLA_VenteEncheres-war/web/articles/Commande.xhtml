@@ -35,14 +35,16 @@
                                       
                                   </ul>
                                   <div class="card-block text-center">
-                                      <h:commandButton class="btn btn-primary" value="Ajouter au Paner " action="#{articlesController.ajoutpanier(item.idpartEnch)}"/>
+                                      <h:commandButton class="btn btn-primary" value="Ajouter au Panier " action="#{articlesController.ajoutpanier(item.idpartEnch)}"/>
                                   </div>
                                 </div>
                                 </div>
                             </div>
                         </ui:repeat>
+                    <h:commandLink action="#{articlesController.panierList()}" value="Voir mon Panier" immediate="true"/>
+           
                     <h:commandLink action="#{articlesController.prepareListEnchere()}" value="Recherche des articles" immediate="true"/>
-                    <h:commandLink action="#{articlesController.commandeList()}" value="#{bundle.ListArticlesCreateLink}"/>
+                    <h:commandLink action="#{articlesController.commandeList()}" value="Liste des commandes"/>
               
                 </div>               
             </h:form>

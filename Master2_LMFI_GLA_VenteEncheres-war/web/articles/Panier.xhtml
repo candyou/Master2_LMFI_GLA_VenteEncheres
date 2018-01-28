@@ -19,43 +19,52 @@
         </ui:define>
         
         <ui:define name="container">
-            <div class="panel panel-primary" style="margin:20px;">
-            <div class="panel-heading">
-              Liste des ventes
-            </div>
-            <div class="panel-body">
             <h:form styleClass="jsfcrud_list_form">
                 <div class="row">
-                    <ui:repeat value="#{articlesController.allArt}" var="item">
+                    <ui:repeat value="#{articlesController.listparticip}" var="item">
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
                                 <img class="card-img-top" src="" alt="Card image cap"/>
                                   <div class="caption">
                                     <div class="divfixheight" >
-                                    <h3>#{item.nomArticle}</h3>
+                                        <h3>#{item.idArticle.nomArticle}</h3>
                                     </div>
                                   <ul class="list-group">
-                                      <li class="list-group-item">Prix De Départ : #{item.prixDepart}</li>
-                                      <li class="list-group-item">Enchère maximum : #{articlesController.getPrixMax(item.idarticle)}</li>
-                                      <li class="list-group-item"> Date Limite :
-                                      <h:outputText value="#{item.dateLimite}" >
-                                            <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
-                                      </h:outputText>
-                                      </li>
+                                      <li class="list-group-item">Prix Final : #{item.prixProp}</li>
+                                      <li class="list-group-item">Description : #{item.idArticle.description}</li>
+                                      
                                   </ul>
-                                  <div class="card-block text-center">
-                                      <h:commandButton class="btn btn-primary" value="Voir la vente" action="#{articlesController.prepareViewId(item.idarticle)}"/>
-                                  </div>
+                              
                                 </div>
                                 </div>
                             </div>
                         </ui:repeat>
+                    <h1><legend><center> Vos Adresses Enregistrées</center></legend></h1>
+                    
+                     <div class="control-group">
+                            <label class="control-label" for="adresse">Adresse de livraison</label>
+                           
+                    <h:selectOneMenu value="#{articlesController.adresse}" class="form-control">
+                        <f:selectItems value="#{articlesController.adresseList}"  />
+                    </h:selectOneMenu>
+                     </div>
+                    <div class="control-group">
+                            <label class="control-label" for="nomcb">Numero de votre Carte Bancaire</label>
+                            <h:inputText  value="#{articlesController.facturation.numCb}" title="num de CB"  class="form-control"/>
+                </div>
+                     <div class="control-group">
+                            <label class="control-label" for="dateexp">La date d'expiration</label>
+                            <h:inputText  value="#{articlesController.facturation.dateExp}" title="Date d'expiration"  class="form-control"/>
+                </div>
+                     <h:commandLink action="#{articlesController.confirmerachat()}" value="Confirmer votre achat" immediate="true"/>
+                  
+                    
+                    
                     <h:commandLink action="#{articlesController.prepareListEnchere()}" value="Recherche des articles" immediate="true"/>
                     <h:commandLink action="#{articlesController.commandeList()}" value="Liste des commandes"/>
+              
                 </div>               
             </h:form>
-            </div>
-            </div>
         </ui:define>
     </ui:composition>
 
