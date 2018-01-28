@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "ParticipeEnch.findByEtatParticip", query = "SELECT p FROM ParticipeEnch p WHERE p.etatParticip = :etatParticip")
     , @NamedQuery(name = "ParticipeEnch.findByIdArt", query = "Select p from ParticipeEnch p WHERE p.idArticle.idarticle = :idArticle")
     , @NamedQuery(name = "ParticipeEnch.getMaxPart", query = "Select p from ParticipeEnch p WHERE p.idUser.idusers = :idUser AND  p.etatAchat= 0 AND p.idArticle.dateLimite> :dateLimite AND p.prixProp IN (SELECT MAX(p.prixProp) FROM ParticipeEnch p   GROUP BY p.idArticle) ")  
-    , @NamedQuery(name = "ParticipeEnch.findByEtatAchat", query = "SELECT p FROM ParticipeEnch p WHERE p.etatAchat = :etatAchat")})
+    , @NamedQuery(name = "ParticipeEnch.getPanier", query = "Select p from ParticipeEnch p WHERE p.idUser.idusers = :idUser AND  p.etatAchat= 1")
+        , @NamedQuery(name = "ParticipeEnch.findByEtatAchat", query = "SELECT p FROM ParticipeEnch p WHERE p.etatAchat = :etatAchat")})
 public class ParticipeEnch implements Serializable {
 
     private static final long serialVersionUID = 1L;

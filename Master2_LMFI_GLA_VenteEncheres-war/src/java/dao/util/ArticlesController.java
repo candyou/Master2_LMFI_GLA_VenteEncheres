@@ -29,6 +29,8 @@ import javax.faces.model.SelectItem;
 public class ArticlesController implements Serializable {
 
     private Articles current;
+    private List<UserAdresse> adresseList;
+    private Adresses adresse;
     private DataModel items = null;
     private List<ParticipeEnch> listparticip=null;
     @EJB
@@ -40,7 +42,8 @@ public class ArticlesController implements Serializable {
     @EJB
     private ParticipeEnchFacade partienchFacade;
     @EJB
-    private CommandeFacade commandeFacade;
+    private FacturationFacade facturationFacade;
+    private Facturation facturation;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<String> checkedcategories;
@@ -51,9 +54,52 @@ public class ArticlesController implements Serializable {
         return prixprop;
     }
 
+    public Adresses getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(Adresses adresse) {
+        this.adresse = adresse;
+    }
+
+    public FacturationFacade getFacturationFacade() {
+        return facturationFacade;
+    }
+
+    public void setFacturationFacade(FacturationFacade facturationFacade) {
+        this.facturationFacade = facturationFacade;
+    }
+
+    public Facturation getFacturation() {
+        return facturation;
+    }
+
+    public void setFacturation(Facturation facturation) {
+        this.facturation = facturation;
+    }
+
+    
     public void setPrixprop(Double prixprop) {
         this.prixprop = prixprop;
     }
+
+    
+    public UsersFacade getUserFacade() {
+        return userFacade;
+    }
+
+    public void setUserFacade(UsersFacade userFacade) {
+        this.userFacade = userFacade;
+    }
+
+    public List<UserAdresse> getAdresseList() {
+        return adresseList;
+    }
+
+    public void setAdresseList(List<UserAdresse> adresseList) {
+        this.adresseList = adresseList;
+    }
+    
     
     public List<String> getCheckedcategories() {
         return checkedcategories;
@@ -96,6 +142,21 @@ public class ArticlesController implements Serializable {
         listparticip=partienchFacade.getMaxPart(userFacade.find(1).getIdusers());
         System.out.println(listparticip.size());
         return "Commande";
+    }
+    public String confirmerachat(){
+         /* System.out.println("dao.util.ArticlesController.confirmerachat()"+ facturation.getNumCb());
+         
+        facturation.setIdUser(userFacade.find(1));
+        facturationFacade.create(facturation);*/
+        return "Commande";
+    }
+    public String panierList(){
+        
+        listparticip=partienchFacade.getPanier(userFacade.find(1).getIdusers());
+        adresseList =new Vector<>();
+        adresseList =userFacade.find(1).getUserAdresseList();
+        System.out.println(adresseList.size());
+        return "Panier";
     }
     public String ajoutpanier(int id){
         ParticipeEnch p ;

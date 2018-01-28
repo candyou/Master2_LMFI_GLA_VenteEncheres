@@ -107,7 +107,7 @@ public class UserAdresse implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.UserAdresse[ userAdressePK=" + userAdressePK + " ]";
+        return adresses.getNumRue() + " " + adresses.getNomRue() + "  " + adresses.getCp()+  "  " + adresses.getVille();
     }
     
 }

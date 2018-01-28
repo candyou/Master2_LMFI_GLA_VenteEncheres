@@ -73,5 +73,13 @@ public class ParticipeEnchFacade extends AbstractFacade<ParticipeEnch> {
                 .getResultList();
         return listPart;
     }
+      public List<ParticipeEnch> getPanier(int idUser){
+     
+        List<ParticipeEnch> listPart = em.createNamedQuery("ParticipeEnch.getPanier",ParticipeEnch.class)
+             
+                .setParameter("idUser", (int)idUser)
+                .getResultList();
+        return listPart;
+    }
     
 }
