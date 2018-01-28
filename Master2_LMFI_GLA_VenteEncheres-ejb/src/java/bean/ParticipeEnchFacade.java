@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -63,6 +64,14 @@ public class ParticipeEnchFacade extends AbstractFacade<ParticipeEnch> {
                 max = participeEnch.getPrixProp();
         }
         return max;
+    }
+    public List<ParticipeEnch> getMaxPart(int idUser){
+        Date d = new Date();
+        List<ParticipeEnch> listPart = em.createNamedQuery("ParticipeEnch.getMaxPart",ParticipeEnch.class)
+               .setParameter("dateLimite", d)
+                .setParameter("idUser", (int)idUser)
+                .getResultList();
+        return listPart;
     }
     
 }
