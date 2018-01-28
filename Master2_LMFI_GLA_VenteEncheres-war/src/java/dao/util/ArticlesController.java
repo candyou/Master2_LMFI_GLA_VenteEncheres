@@ -30,6 +30,7 @@ public class ArticlesController implements Serializable {
 
     private Articles current;
     private DataModel items = null;
+    private List<ParticipeEnch> listparticip=null;
     @EJB
     private ArticlesFacade ejbFacade;
     @EJB 
@@ -38,6 +39,8 @@ public class ArticlesController implements Serializable {
     private UsersFacade userFacade;
     @EJB
     private ParticipeEnchFacade partienchFacade;
+    @EJB
+    private CommandeFacade commandeFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<String> checkedcategories;
@@ -88,6 +91,33 @@ public class ArticlesController implements Serializable {
         return ejbFacade.findAll();
     }
     
+    public String commandeList(){
+        
+        listparticip=partienchFacade.getMaxPart(userFacade.find(1).getIdusers());
+        System.out.println(listparticip.size());
+        return "Commande";
+    }
+    public String ajoutpanier(int id){
+        ParticipeEnch p ;
+        p = partienchFacade.find(id);
+     /*   List<Commande> commandeList = new Vector<>();
+        Commande a = new Commande();
+         commandeList.add(a);
+        p.setCommandeList(commandeList);*/
+        p.setEtatAchat(Short.parseShort("1"));
+        
+        partienchFacade.edit(p);
+        
+       return commandeList();
+    }
+
+    public List<ParticipeEnch> getListparticip() {
+        return listparticip;
+    }
+
+    public void setListparticip(List<ParticipeEnch> listparticip) {
+        this.listparticip = listparticip;
+    }
     
     
     
@@ -190,7 +220,7 @@ public class ArticlesController implements Serializable {
            
            List<UserArticle> listuserarticles = new Vector<>();
            
-          Users u = userFacade.find(14);// recuperer id de l'utilisateur connecter
+          Users u = userFacade.find(1);// recuperer id de l'utilisateur connecter
            UserArticlePK upk=new UserArticlePK(u.getIdusers(), current.getIdarticle());
         
            ua.setUserArticlePK(upk);
