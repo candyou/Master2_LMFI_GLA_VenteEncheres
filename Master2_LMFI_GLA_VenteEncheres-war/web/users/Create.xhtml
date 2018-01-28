@@ -5,18 +5,23 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{bundle.CreateUsersTitle}"></h:outputText>
-        </ui:define>
-        <ui:define name="container">
+    
+    <h:head>
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    </h:head>
+            <div class="panel panel-primary" style="margin:20px;">
+            <div class="panel-heading">
+              <h3 class="panel-title">Inscription</h3>
+            </div>
+                <div class="panel-body">
+                <div class="container-fluid">
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             
             <div class="row">
             <h:form styleClass="form-horizontal">
-                    <legend><center><h2><b>Inscription</b></h2></center></legend><br/>
                     <div class="col-lg-6">
                     <div class="control-group">
                         <label class="control-label" for="nom">Nom</label>
@@ -76,17 +81,12 @@
                     </div>
                 <br />
                  <h:commandButton class="btn btn-primary" value="S'inscrire" action="#{usersController.create}"/>
-                <br />
-                <br />
-                <h:commandLink action="#{usersController.prepareList}" value="#{bundle.CreateUsersShowAllLink}" immediate="true"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.CreateUsersIndexLink}"/>
                 </div>
             </h:form>
-                
             </div>
-        </ui:define>
-    </ui:composition>
+                </div>
+                </div>
+            </div>
+                
 
 </html>

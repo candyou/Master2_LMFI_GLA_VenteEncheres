@@ -45,4 +45,10 @@ public class ArticlesFacade extends AbstractFacade<Articles> {
         query.setParameter("dateLimite",d);
         return query.getResultList();
      }
+     
+     public List<Articles> getValideArti(){
+         return em.createNamedQuery("Articles.findByValide",Articles.class)
+                 .setParameter("datelimite", new Date())
+                 .getResultList();
+     }
 }

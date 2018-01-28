@@ -20,12 +20,13 @@
                       <span class="icon-bar"></span>
                       <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Enchères</a>
+                    <h:link value="Enchére" outcome="/index" class="navbar-brand"/>
                   </div>
                   <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                      <li class="active"><a href="#">Accueil</a></li>
-                      <li><a href="#about">Mes Enchère</a></li>
+                      <li class="active"><h:link value="Accueil" outcome="/index" /></li>
+                          <li><h:link value="Mes Enchéres" outcome="/participeEnch/MesEnchere" /></li>
+                          <li><h:link value="Mes Ventes" outcome="/userArticle/MesVentes" /></li>
                       <li><a href="#contact">Contact</a></li>
                     </ul>
                       <ul class="nav navbar-nav navbar-right">

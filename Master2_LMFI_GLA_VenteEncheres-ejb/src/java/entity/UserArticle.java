@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "UserArticle.findAll", query = "SELECT u FROM UserArticle u")
     , @NamedQuery(name = "UserArticle.findByIdUser", query = "SELECT u FROM UserArticle u WHERE u.userArticlePK.idUser = :idUser")
     , @NamedQuery(name = "UserArticle.findByIdArticle", query = "SELECT u FROM UserArticle u WHERE u.userArticlePK.idArticle = :idArticle")
+    , @NamedQuery(name = "UserArticle.findByArtUser", query = "SELECT u FROM UserArticle u WHERE u.userArticlePK.idArticle = :idArticle and u.userArticlePK.idUser = :idUser")
     , @NamedQuery(name = "UserArticle.findByDateCreate", query = "SELECT u FROM UserArticle u WHERE u.dateCreate = :dateCreate")})
 public class UserArticle implements Serializable {
 

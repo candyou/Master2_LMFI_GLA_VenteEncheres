@@ -5,6 +5,7 @@
  */
 package bean;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -59,6 +60,21 @@ public abstract class AbstractFacade<T> {
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
+    }
+    
+    public List<T> refreshCollection(List<T> entityCollection)
+    {
+        List<T> result = new ArrayList<T>();
+        if (entityCollection != null && !entityCollection.isEmpty()) {
+            getEntityManager().getEntityManagerFactory().getCache().evict(entityCollection.get(0).getClass());
+            T mergedEntity;
+            for (T entity : entityCollection) {
+                mergedEntity = getEntityManager().merge(entity);
+                getEntityManager().refresh(mergedEntity);
+                result.add(mergedEntity);
+            }
+        }
+        return result;
     }
     
 }

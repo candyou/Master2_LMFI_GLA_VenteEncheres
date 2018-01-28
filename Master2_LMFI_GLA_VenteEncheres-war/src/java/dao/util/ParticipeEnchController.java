@@ -1,11 +1,15 @@
 package dao.util;
 
+import bean.ArticlesFacade;
 import entity.ParticipeEnch;
 import dao.util.util.JsfUtil;
 import dao.util.util.PaginationHelper;
 import bean.ParticipeEnchFacade;
+import bean.UsersFacade;
+import entity.Articles;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -23,9 +27,14 @@ import javax.faces.model.SelectItem;
 public class ParticipeEnchController implements Serializable {
 
     private ParticipeEnch current;
+    private Articles selectedArticle;
     private DataModel items = null;
     @EJB
     private ParticipeEnchFacade ejbFacade;
+    @EJB
+    private ArticlesFacade artFacade;
+    @EJB 
+    private UsersFacade usFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -81,6 +90,10 @@ public class ParticipeEnchController implements Serializable {
 
     public String create() {
         try {
+            current.setIdUser(usFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")));
+            current.setIdArticle(artFacade.find(selectedArticle.getIdarticle()));
+            current.setEtatAchat(Short.parseShort("1"));
+            current.setEtatParticip(Short.parseShort("0"));
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ParticipeEnchCreated"));
             return prepareCreate();
@@ -115,7 +128,11 @@ public class ParticipeEnchController implements Serializable {
         recreateModel();
         return "List";
     }
-
+    
+    public void destroyPart(int idPart){
+        
+    }
+    
     public String destroyAndView() {
         performDestroy();
         recreateModel();
@@ -190,6 +207,23 @@ public class ParticipeEnchController implements Serializable {
 
     public ParticipeEnch getParticipeEnch(java.lang.Integer id) {
         return ejbFacade.find(id);
+    }
+    
+    public Articles getSelectedArticle(){
+        return selectedArticle;
+    }
+    public String prepareViewArt(int idArticle)  {
+        try {
+            selectedArticle = artFacade.find(idArticle);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/Master2_LMFI_GLA_VenteEncheres-war/participeEnch/Participer.xhtml");
+        } catch (Exception e) {
+        }
+        return "";
+    }
+    
+    public List<ParticipeEnch> getMyEnchere(){
+        List<ParticipeEnch> list = usFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")).getParticipeEnchList();
+        return list;
     }
 
     @FacesConverter(forClass = ParticipeEnch.class)

@@ -42,8 +42,6 @@ public class CategorieFacade extends AbstractFacade<Categorie> {
       public Categorie categoriesbyname(String nomCat){
         Categorie list = em.createNamedQuery("Categories.categoriesbyname",Categorie.class)
                 .setParameter("nomCat", nomCat).getSingleResult();
-          
-
         return list;
     } 
     

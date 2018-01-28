@@ -35,23 +35,19 @@
                      <div class="control-group">
                             <label class="control-label" for="datelimite">Date limite</label>
                     <h:inputText id="dateLimite" value="#{articlesController.selected.dateLimite}" title="#{bundle.CreateArticlesTitle_dateLimite}" class="form-control">
-                     
                         <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-               
                     </h:inputText>
                 </div>
                       <div class="control-group">
                             <label class="control-label" for="categories">Categories ( Par defaut la categorie sera dans Autres)</label>
+                            
                     <h:selectManyCheckbox value="#{articlesController.checkedcategories}" class="form-control">
-                        <f:selectItems value="#{articlesController.catFacade.selectCategories()}" 
-                                       var="elem" itemLabel="#{elem}" />
-                
-   			
-   		</h:selectManyCheckbox>
-                </div>
+                        <f:selectItems value="#{articlesController.catFacade.selectCategories()}" var="elem" itemLabel="#{elem}" />
+                    </h:selectManyCheckbox>
+                    </div>
                 <div class="control-group">
                     <label class="control-label" for="description">Description</label>
-                    <h:inputText id="description" value="#{articlesController.selected.description}" title="#{bundle.CreateArticlesTitle_description}" class="form-control"/>
+                    <h:inputText id="description" value="#{articlesController.selected.description}" title="#{bundle.CreateArticlesTitle_description}" class="table"/>
                 </div>
                  
                 <br />

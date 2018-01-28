@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewArticlesTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="container">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <div class="panel panel-primary" style="margin:20px;">
+            <div class="panel-heading">
+              Information de votre Article
+            </div>
+            <div class="panel-body">
+                <h:form styleClass="form-horizontal">
+                    <div class="row">
+                        <div class="col-xs-6">
+                    <h4>Informations</h4>
+                    <hr class="separator"/>
+
+                    <table class="table borderless">
+                      <tbody>
+                      <tr>
+                        <th scope="row">Id</th>
+                        <td>#{participeEnchController.selectedArticle.idarticle}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Nom d'article</th>
+                        <td>#{participeEnchController.selectedArticle.nomArticle}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Prix Depart</th>
+                        <td>#{participeEnchController.selectedArticle.prixDepart}</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Date Limite</th>
+                        <td>
+                            <h:outputText value="#{participeEnchController.selectedArticle.dateLimite}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </td>
+                      </tr>
+                          <tr>
+                              <th scope="row">Categorie</th>
+                               <td>
+                            <ui:repeat value="#{participeEnchController.selectedArticle.categorieList}" var="cat" >
+                            <h:outputText value="#{cat.nomCat}" />
+                            <h:outputText value="  ,"/>
+                            </ui:repeat>
+                        </td>
+                          </tr>
+                      <tr>
+                        <th scope="row">Description</th>
+                        <td>#{participeEnchController.selectedArticle.description}</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                    </div>
+                        <div class="col-xs-6">
+                            <h4>Les participants</h4>
+                        <hr class="separator"/>
+                        <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th scope="col">Nom Participant</th>
+                            <th scope="col">Prix Proposé</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <ui:repeat value="#{articlesController.getParti(participeEnchController.selectedArticle.idarticle)}" var="part">
+                               <tr>
+                                <td><h:outputText value="#{part.idUser.nom} #{part.idUser.prenom}"/></td>
+                                <td><h:outputText value="#{part.prixProp}"/></td>
+                                </tr>
+                           </ui:repeat>
+                        </tbody>
+                    </table>
+                        </div>
+                        <div class="col-xs-6">
+                        <h4>Participer</h4>
+                        <hr class="separator"/>
+                        <div class="control-group">
+                        <label class="control-label" for="nom">Enchérir</label>
+                        <h:inputText value="#{participeEnchController.selected.prixProp}"  class="form-control"/>
+                        <div class="control-group">
+                        <h:commandLink action="#{participeEnchController.create()}" value="Confirmer" class="btn btn-primary"/>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+          </div>
+        </ui:define>
+    </ui:composition>
+
+</html>

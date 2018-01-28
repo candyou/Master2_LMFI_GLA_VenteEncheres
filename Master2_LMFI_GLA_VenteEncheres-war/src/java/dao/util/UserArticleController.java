@@ -1,11 +1,18 @@
 package dao.util;
 
+import bean.ArticlesFacade;
+import bean.ParticipeEnchFacade;
 import entity.UserArticle;
 import dao.util.util.JsfUtil;
 import dao.util.util.PaginationHelper;
 import bean.UserArticleFacade;
+import bean.UsersFacade;
+import entity.Articles;
+import entity.ParticipeEnch;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -26,6 +33,11 @@ public class UserArticleController implements Serializable {
     private DataModel items = null;
     @EJB
     private UserArticleFacade ejbFacade;
+    @EJB
+    private UsersFacade userFacade;
+    @EJB
+    private ArticlesFacade artFacade;
+    @EJB private ParticipeEnchFacade partFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -121,6 +133,34 @@ public class UserArticleController implements Serializable {
         recreateModel();
         return "List";
     }
+    
+    public void destroyArticle(int idArt,int idUser){
+        //ejbFacade.find(this)
+        try {
+            ejbFacade.remove(ejbFacade.findByArtUser(idArt,idUser));
+            List<ParticipeEnch> list = partFacade.getPartByArti(idArt);
+            for (ParticipeEnch participeEnch : list) {
+                partFacade.remove(participeEnch);
+            }
+            Articles a = artFacade.find(idArt);
+            artFacade.remove(artFacade.find(idArt));
+            
+            
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/Master2_LMFI_GLA_VenteEncheres-war/userArticle/MesVentes.xhtml");
+        } catch (Exception e) {
+        }
+    }
+    
+    public boolean verifDate(int idArt){
+        Articles art = artFacade.find(idArt);
+        Date now = new Date();
+        return art.getDateLimite().after(now);
+    }
+    
+    public Date currentDate(){
+        Date d = new Date();
+        return d;
+    }
 
     public String destroyAndView() {
         performDestroy();
@@ -196,6 +236,12 @@ public class UserArticleController implements Serializable {
 
     public UserArticle getUserArticle(entity.UserArticlePK id) {
         return ejbFacade.find(id);
+    }
+    
+    public List<UserArticle> getMyVente(){
+        userFacade.refreshCollection(userFacade.findAll());
+        List<UserArticle> list = userFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")).getUserArticleList();
+        return list;
     }
 
     @FacesConverter(forClass = UserArticle.class)

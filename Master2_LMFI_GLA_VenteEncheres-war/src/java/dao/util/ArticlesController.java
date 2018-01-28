@@ -41,6 +41,8 @@ public class ArticlesController implements Serializable {
     private ParticipeEnchFacade partienchFacade;
     @EJB
     private CommandeFacade commandeFacade;
+    @EJB
+    private UserArticleFacade usAdFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<String> checkedcategories;
@@ -88,7 +90,7 @@ public class ArticlesController implements Serializable {
     }
     
     public List<Articles> getAllArt(){
-        return ejbFacade.findAll();
+        return ejbFacade.getValideArti();
     }
     
     public String commandeList(){
@@ -182,10 +184,14 @@ public class ArticlesController implements Serializable {
     }
 
     
-    public String prepareViewId(int id) {
+    public String prepareViewId(int id)  {
         current = (Articles) ejbFacade.find(id);
         //selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/Master2_LMFI_GLA_VenteEncheres-war/articles/View.xhtml");
+        } catch (Exception e) {
+        }
+        return "";
     }
      public String prepareParticiper() {
         current = (Articles) getItems().getRowData();
@@ -203,7 +209,7 @@ public class ArticlesController implements Serializable {
         return "Create";
     }
     public String participe(){
-        ParticipeEnch p = new ParticipeEnch(1, prixprop, Short.parseShort("1"), Short.parseShort("0"), current, userFacade.find(1));
+        ParticipeEnch p = new ParticipeEnch(1, prixprop, Short.parseShort("1"), Short.parseShort("0"), current, userFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")));
         getPartienchFacade().create(p);
           recreateModel();
           items=new ListDataModel(ejbFacade.contraintelimite());
@@ -216,31 +222,23 @@ public class ArticlesController implements Serializable {
     public String create() {
         try {
             // Authentification doit etre faites ici . 
-            UserArticle ua = new UserArticle();
-           
-           List<UserArticle> listuserarticles = new Vector<>();
-           
-          Users u = userFacade.find(1);// recuperer id de l'utilisateur connecter
-           UserArticlePK upk=new UserArticlePK(u.getIdusers(), current.getIdarticle());
-        
-           ua.setUserArticlePK(upk);
-           
-           ua.setArticles(current);
-           ua.setUsers(u);
-          
-          //  uaFacade.create(ua);
-           ua.setDateCreate(new Date());
-            listuserarticles.add(ua);
+            UserArticle ua = new UserArticle();      
+            Users u = userFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser"));// recuperer id de l'utilisateur connecter   
+            System.out.println("dao.util.ArticlesController.create()"+ u.toString());
+            ua.setDateCreate(new Date());
             listcategories=new Vector<>();
             if(checkedcategories.size()==0)checkedcategories.add("Autres");
             for(String cat : checkedcategories){
                 listcategories.add(catFacade.categoriesbyname(cat));
             }
             
-            System.out.println("dao.util.ArticlesController.create()"+listcategories.get(0).getNomCat());
-              current.setCategorieList(listcategories);
+            //System.out.println("dao.util.ArticlesController.create()"+listcategories.get(0).getNomCat());
+            current.setCategorieList(listcategories);
         //  current.setUserArticleList(listuserarticles);
             getFacade().create(current);
+            UserArticlePK upk = new UserArticlePK(u.getIdusers(), current.getIdarticle());
+            ua.setUserArticlePK(upk);
+            usAdFacade.create(ua);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ArticlesCreated"));
             return prepareCreate();
         } catch (Exception e) {

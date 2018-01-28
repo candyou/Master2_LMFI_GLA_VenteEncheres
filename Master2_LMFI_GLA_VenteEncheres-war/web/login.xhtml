@@ -31,11 +31,13 @@
                         </div>
                         <br/>
                         </div>
-
-                        <!-- TODO change default id user -->
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                             <h:commandButton class="btn btn-primary" value="Connexion" action="#{authentController.authenti()}"/>
+                            </div>
+                        <br/>
+                            <div class="col-sm-offset-2 col-sm-10">
+                            <h:commandButton class="btn btn-success" value="Inscription" action="users/Create?faces-redirect=true"/>
                             </div>
                         </div>
                     </h:form>

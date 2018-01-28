@@ -23,6 +23,7 @@ public void afterPhase(PhaseEvent event) {
     FacesContext facesContext = event.getFacesContext();
     String currentPage = facesContext.getViewRoot().getViewId();
  
+    boolean isRegisterPage = (currentPage.lastIndexOf("users/Create.xhtml") > -1);
     boolean isLoginPage = (currentPage.lastIndexOf("login.xhtml") > -1);
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
  
@@ -30,7 +31,7 @@ public void afterPhase(PhaseEvent event) {
     NavigationHandler nh = facesContext.getApplication().getNavigationHandler();
     nh.handleNavigation(facesContext, null, "login");
     }
- 
+    else if (isRegisterPage) {}
     else{
     Object currentUser = session.getAttribute("username");
  

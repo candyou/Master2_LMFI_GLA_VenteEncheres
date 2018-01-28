@@ -24,6 +24,13 @@ public class UserArticleFacade extends AbstractFacade<UserArticle> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
+    public UserArticle findByArtUser(int idArt,int idUer){
+        return em.createNamedQuery("UserArticle.findByArtUser",UserArticle.class)
+                .setParameter("idUser", idUer)
+                .setParameter("idArticle", idArt)
+                .getSingleResult();
+    }
 
     public UserArticleFacade() {
         super(UserArticle.class);
