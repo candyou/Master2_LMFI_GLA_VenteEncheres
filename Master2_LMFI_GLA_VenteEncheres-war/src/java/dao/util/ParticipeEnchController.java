@@ -5,10 +5,13 @@ import entity.ParticipeEnch;
 import dao.util.util.JsfUtil;
 import dao.util.util.PaginationHelper;
 import bean.ParticipeEnchFacade;
+import bean.UserAdresseFacade;
 import bean.UsersFacade;
 import entity.Articles;
+import entity.UserAdresse;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -35,6 +38,8 @@ public class ParticipeEnchController implements Serializable {
     private ArticlesFacade artFacade;
     @EJB 
     private UsersFacade usFacade;
+    @EJB
+    private UserAdresseFacade usAdFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -92,7 +97,7 @@ public class ParticipeEnchController implements Serializable {
         try {
             current.setIdUser(usFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")));
             current.setIdArticle(artFacade.find(selectedArticle.getIdarticle()));
-            current.setEtatAchat(Short.parseShort("1"));
+            current.setEtatAchat(Short.parseShort("0"));
             current.setEtatParticip(Short.parseShort("0"));
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ParticipeEnchCreated"));
@@ -224,6 +229,38 @@ public class ParticipeEnchController implements Serializable {
     public List<ParticipeEnch> getMyEnchere(){
         List<ParticipeEnch> list = usFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")).getParticipeEnchList();
         return list;
+    }
+    
+    public String getEtatEnch(int id){
+        ParticipeEnch part = ejbFacade.find(id);
+        if (part.getIdArticle().getDateLimite().after(new Date())){
+            return "En cours";
+        }
+        else 
+            return "Terminé";
+    }
+    
+    public String getEtatAchat(int id){
+        ParticipeEnch part = ejbFacade.find(id);
+        if (getEtatEnch(id) == "Terminé" && ejbFacade.getMaxProp(part.getIdArticle().getIdarticle()) == part.getPrixProp()){
+            return "Gagnée !";
+        }
+        else if (getEtatEnch(id) == "En cours") return "En cours";
+        return "Pas de chance";
+    }
+    
+    public boolean getEtatButton(int id){
+        if (getEtatAchat(id) == "Gagnée !")
+            return true;
+        return false;
+    }
+    
+    public List<ParticipeEnch> panierList(){
+        return ejbFacade.getPanier((int)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser"));
+    }
+    
+    public List<UserAdresse> getUserAdresses(){
+        return usAdFacade.getUserAdresseById((int)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser"));
     }
 
     @FacesConverter(forClass = ParticipeEnch.class)

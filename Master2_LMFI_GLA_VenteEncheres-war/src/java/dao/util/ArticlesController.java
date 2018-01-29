@@ -142,7 +142,7 @@ public class ArticlesController implements Serializable {
     
     public String commandeList(){
         
-        listparticip=partienchFacade.getMaxPart(userFacade.find(1).getIdusers());
+        listparticip=partienchFacade.getMaxPart((int)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser"));
         System.out.println(listparticip.size());
         return "Commande";
     }
@@ -153,15 +153,7 @@ public class ArticlesController implements Serializable {
         facturationFacade.create(facturation);*/
         return "Commande";
     }
-    public String panierList(){
-        
-        listparticip=partienchFacade.getPanier(userFacade.find(1).getIdusers());
-        adresseList =new Vector<>();
-        adresseList =userFacade.find(1).getUserAdresseList();
-        System.out.println(adresseList.size());
-        return "Panier";
-    }
-    public String ajoutpanier(int id){
+    public void ajoutpanier(int id) {
         ParticipeEnch p ;
         p = partienchFacade.find(id);
      /*   List<Commande> commandeList = new Vector<>();
@@ -169,10 +161,10 @@ public class ArticlesController implements Serializable {
          commandeList.add(a);
         p.setCommandeList(commandeList);*/
         p.setEtatAchat(Short.parseShort("1"));
-        
         partienchFacade.edit(p);
-        
-       return commandeList();
+        try{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/Master2_LMFI_GLA_VenteEncheres-war/articles/Panier.xhtml");
+        }catch(Exception e){}
     }
 
     public List<ParticipeEnch> getListparticip() {

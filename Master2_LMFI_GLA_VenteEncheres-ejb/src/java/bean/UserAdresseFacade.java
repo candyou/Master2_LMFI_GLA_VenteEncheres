@@ -6,6 +6,7 @@
 package bean;
 
 import entity.UserAdresse;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +28,12 @@ public class UserAdresseFacade extends AbstractFacade<UserAdresse> {
 
     public UserAdresseFacade() {
         super(UserAdresse.class);
+    }
+    
+    public List<UserAdresse> getUserAdresseById(int idUser){
+        return em.createNamedQuery("UserAdresse.findByIdAdr",UserAdresse.class)
+                .setParameter("idUser", idUser)
+                .getResultList();
     }
     
 }
