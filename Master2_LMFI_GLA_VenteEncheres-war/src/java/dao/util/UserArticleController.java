@@ -243,6 +243,18 @@ public class UserArticleController implements Serializable {
         List<UserArticle> list = userFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")).getUserArticleList();
         return list;
     }
+    
+    public String getEtatEnch(int id){
+        if (artFacade.find(id).getDateLimite().after(new Date())){
+            return "En cours";
+        }
+        else 
+            return "Terminé";
+    }
+    
+    public void EditArt(int idArt){
+        ArticlesController ar = new ArticlesController();
+    }
 
     @FacesConverter(forClass = UserArticle.class)
     public static class UserArticleControllerConverter implements Converter {

@@ -4,8 +4,12 @@ import entity.*;
 import dao.util.util.JsfUtil;
 import dao.util.util.PaginationHelper;
 import bean.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.io.Serializable;
+import java.nio.file.Files;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,6 +27,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.Part;
 
 @Named("articlesController")
 @SessionScoped
@@ -52,6 +57,10 @@ public class ArticlesController implements Serializable {
     private List<String> checkedcategories;
     private List<Categorie> listcategories;
     private Double prixprop;
+    private Part img;
+    private Categorie catRech;
+    private String nomArtRech;
+    private List<Articles> SearchedArt;
 
     public Double getPrixprop() {
         return prixprop;
@@ -148,9 +157,14 @@ public class ArticlesController implements Serializable {
     }
     public String confirmerachat(){
          /* System.out.println("dao.util.ArticlesController.confirmerachat()"+ facturation.getNumCb());
-         
+        
         facturation.setIdUser(userFacade.find(1));
         facturationFacade.create(facturation);*/
+        Commande c = new Commande();
+        c.setIdAdresse(adresse);
+        c.setIdFacturation(facturation);
+        c.setParticipeEnchList(partienchFacade.getPanier((int)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")));
+        commandeFacade.create(c);
         return "Commande";
     }
     public void ajoutpanier(int id) {
@@ -174,8 +188,14 @@ public class ArticlesController implements Serializable {
     public void setListparticip(List<ParticipeEnch> listparticip) {
         this.listparticip = listparticip;
     }
-    
-    
+
+    public Part getImg() {
+        return img;
+    }
+
+    public void setImg(Part img) {
+        this.img = img;
+    }
     
     public ArticlesController() {
     }
@@ -368,7 +388,59 @@ public class ArticlesController implements Serializable {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
     }
+    
+    public void saveImage(){
+        try (InputStream input = img.getInputStream()) {
+            Files.copy(input, new File("/resources/img", img.getSubmittedFileName()).toPath());
+    }
+    catch (IOException e) {
+        // Show faces message?
+    }
+    }
+    
+    public void modifierArticle(int idArt){
+        current = ejbFacade.find(idArt);
+        try{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/Master2_LMFI_GLA_VenteEncheres-war/articles/Edit.xhtml");
+        }catch(Exception e){}
+    }
+    
+    public List<Categorie> getAllCat(){
+        return catFacade.findAll();
+    }
 
+    public Categorie getCatRech() {
+        return catRech;
+    }
+
+    public void setCatRech(Categorie catRech) {
+        this.catRech = catRech;
+    }
+
+    public String getNomArtRech() {
+        return nomArtRech;
+    }
+
+    public void setNomArtRech(String nomArtRech) {
+        this.nomArtRech = nomArtRech;
+    }
+    
+    public void rechNomCat(){
+        SearchedArt = ejbFacade.getByCatName(nomArtRech, catRech.getIdcategorie());
+        try{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/Master2_LMFI_GLA_VenteEncheres-war/articles/Search.xhtml");
+        }catch(Exception e){}
+    }
+
+    public List<Articles> getSearchedArt() {
+        return SearchedArt;
+    }
+
+    public void setSearchedArt(List<Articles> SearchedArt) {
+        this.SearchedArt = SearchedArt;
+    }
+
+    
     private void updateCurrentItem() {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
@@ -430,6 +502,13 @@ public class ArticlesController implements Serializable {
         return partienchFacade.getMaxProp(idArticle);
     }
 
+    public List<UserAdresse> getUserAdresse(){
+        return userFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")).getUserAdresseList();
+    }
+    
+    public List<Facturation> getFactUser(){
+        return userFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")).getFacturationList();
+    }
     @FacesConverter(forClass = Articles.class)
     public static class ArticlesControllerConverter implements Converter {
 

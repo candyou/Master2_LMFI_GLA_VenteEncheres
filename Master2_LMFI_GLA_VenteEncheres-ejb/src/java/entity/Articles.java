@@ -45,6 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Articles.findByDescription", query = "SELECT a FROM Articles a WHERE a.description = :description")
     , @NamedQuery(name = "Articles.findByPrixDepart", query = "SELECT a FROM Articles a WHERE a.prixDepart = :prixDepart")
     , @NamedQuery(name = "Articles.findByValide", query = "SELECT a FROM Articles a WHERE a.dateLimite > :datelimite")
+    , @NamedQuery(name = "Articles.findByCatAndName", query = "SELECT a FROM Articles a WHERE a.nomArticle = :nomArticle")
     , @NamedQuery(name = "Articles.findByDateLimite", query = "SELECT a FROM Articles a WHERE a.dateLimite = :dateLimite")})
 public class Articles implements Serializable {
 
@@ -61,6 +62,8 @@ public class Articles implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "prix_depart")
     private Double prixDepart;
+    @Column(name = "image")
+    private String image;
     @Column(name = "date_limite")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateLimite;
@@ -149,6 +152,15 @@ public class Articles implements Serializable {
     public void setUserArticleList(List<UserArticle> userArticleList) {
         this.userArticleList = userArticleList;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
 
     @Override
     public int hashCode() {

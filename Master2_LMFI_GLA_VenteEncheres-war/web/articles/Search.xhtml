@@ -4,104 +4,77 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
  
     <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
       
     </head>
     <ui:composition template="/template.xhtml">
-        
-        
+       
         
         <ui:define name="title">
-            <h:outputText value="Recherche des articles"></h:outputText>
+            <h:outputText value="Liste des articles"></h:outputText>
         </ui:define>
         
         <ui:define name="container">
-            <h:form styleClass="jsfcrud_list_form">
-                <h:inputText value="#{articlesController.selected.nomArticle}" />
-       <h:commandButton value="Recherche par nom" action="#{articlesController.searchByName}"></h:commandButton>
-        
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
-                <h:outputText escape="false" value="#{bundle.ListArticlesEmpty}" rendered="#{articlesController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{articlesController.items.rowCount > 0}">
-                    <h:outputText value="#{articlesController.pagination.pageFirstItem + 1}..#{articlesController.pagination.pageLastItem + 1}/#{articlesController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{articlesController.previous}" value="#{bundle.Previous} #{articlesController.pagination.pageSize}" rendered="#{articlesController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{articlesController.next}" value="#{bundle.Next} #{articlesController.pagination.pageSize}" rendered="#{articlesController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{articlesController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px" class="card">
-                   
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListArticlesTitle_idarticle}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idarticle}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListArticlesTitle_nomArticle}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nomArticle}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListArticlesTitle_description}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.description}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListArticlesTitle_prixDepart}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.prixDepart}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListArticlesTitle_dateLimite}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.dateLimite}">
-                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
-                            </h:outputText>
-                            
-                        </h:column> 
-                        
-                          <h:column>
-                               <f:facet name="header">
-                                <h:outputText value="Categories"/>
-                            </f:facet>
-                              <ui:repeat value="#{item.categorieList}" var="cat">
-                          <h:outputText value="#{cat.nomCat}"/>
-                          <h:outputText value="   "/>
-                          </ui:repeat>
-                        </h:column>
-                        <h:column>
-                              <f:facet name="header">
-                                <h:outputText value="Prix maximal enchere"/>
-                            </f:facet>
-                            <h:outputText value="#{item.participeEnchList[0].prixProp}"/>
-                        
-                        </h:column>
-                       
-                       
-                        <h:column>
-                            
-                               <h:commandLink action="#{articlesController.prepareParticiper}" value="Participer à l'enchère"/>
-                         
-                        </h:column>
-                    </h:dataTable>
-                </h:panelGroup>
-                <br />
-                <h:commandLink action="#{articlesController.prepareCreate}" value="#{bundle.ListArticlesCreateLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ListArticlesIndexLink}"/>
-                 <h:commandLink action="#{articlesController.prepareList}" value="#{bundle.CreateArticlesShowAllLink}" immediate="true"/>
-                <h:commandLink action="#{articlesController.panierList()}" value="Voir mon Panier" immediate="true"/>
-           
+            <div class="panel panel-primary" style="margin:20px;">
+            <div class="panel-heading">
+              Liste des ventes
+            </div>
+            <div class="panel-body">
+            <h:form>
+                <div class="col-6">
+                    <h2>Rechercher</h2>
+                        <div class="input-group">
+                        <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" />
+                        <h:selectOneMenu value="#{articlesController.catRech}" class="form-control">
+                            <f:selectItems value="#{articlesController.allCat}"  />
+                            </h:selectOneMenu>
+                        <span class="input-group-btn">
+                        <button type="submit" class="btn btn-primary btn-sm">Rechercher</button>
+                        </span>
+                        </div>
+                </div>
+                <div class="row">
+                    <ui:repeat value="#{articlesController.searchedArt}" var="item">
+                            <div class="col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <c:if test="#{not empty item.image}">
+                                    <img class="card-img-top" src="/Master2_LMFI_GLA_VenteEncheres-war#{item.image}" alt="Card image cap"/>
+                                    </c:if>
+                                    <c:if test="#{empty item.image}">
+                                    <img class="card-img-top" src="/Master2_LMFI_GLA_VenteEncheres-war/resources/img/no-image.jpg" alt="Card image cap"/>
+                                    </c:if>
+                                  <div class="caption">
+                                    <div class="divfixheight" >
+                                    <h3>#{item.nomArticle}</h3>
+                                    </div>
+                                  <ul class="list-group">
+                                      <li class="list-group-item">Prix De Départ : #{item.prixDepart}</li>
+                                      <li class="list-group-item">Enchère maximum : #{articlesController.getPrixMax(item.idarticle)}</li>
+                                      <li class="list-group-item"> Date Limite :
+                                      <h:outputText value="#{item.dateLimite}" >
+                                            <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                                      </h:outputText>
+                                      </li>
+                                  </ul>
+                                  <div class="card-block text-center">
+                                      <p><h:commandButton class="btn btn-primary" value="Voir la vente" action="#{articlesController.prepareViewId(item.idarticle)}"/></p>
+                                      <p>
+                                          <h:commandButton class="btn btn-success" value="Participer" action="#{participeEnchController.prepareViewArt(item.idarticle)}">
+                                          </h:commandButton>
+                                      </p>
+                                  </div>
+                                </div>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                </div>               
             </h:form>
-               
+            </div>
+            </div>
         </ui:define>
     </ui:composition>
 

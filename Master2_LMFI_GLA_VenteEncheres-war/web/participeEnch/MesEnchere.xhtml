@@ -29,7 +29,12 @@
                     <ui:repeat value="#{participeEnchController.myEnchere}" var="item">
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
-                                <img class="card-img-top" src="" alt="Card image cap"/>
+                                    <c:if test="#{not empty item.idArticle.image}">
+                                    <img class="card-img-top" src="/Master2_LMFI_GLA_VenteEncheres-war#{item.idArticle.image}" alt="Card image cap"/>
+                                    </c:if>
+                                    <c:if test="#{empty item.idArticle.image}">
+                                    <img class="card-img-top" src="/Master2_LMFI_GLA_VenteEncheres-war/resources/img/no-image.jpg" alt="Card image cap"/>
+                                    </c:if>
                                   <div class="caption">
                                     <div class="divfixheight" >
                                         <h3>#{item.idArticle.nomArticle}</h3>
@@ -48,7 +53,7 @@
                                   </ul>
                                   <div class="card-block text-center">
                                       <h:commandButton class="btn btn-primary" value="Détails de l'article" action="#{articlesController.prepareViewId(item.idArticle.idarticle)}"/>
-                                          <h:commandButton class="btn btn-success" value="Ajouter au Panier" action="#{articlesController.ajoutpanier(item.idpartEnch)}" rendered="#{participeEnchController.getEtatButton(item.idpartEnch)}" />
+                                      <h:commandButton class="btn btn-success" value="Ajoute au Panier" action="#{articlesController.ajoutpanier(item.idpartEnch)}" rendered="#{participeEnchController.getEtatButton(item.idpartEnch)}" />
                                   </div>
                                 </div>
                                 </div>

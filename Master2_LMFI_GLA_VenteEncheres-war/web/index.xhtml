@@ -24,12 +24,30 @@
               Liste des ventes
             </div>
             <div class="panel-body">
-            <h:form styleClass="jsfcrud_list_form">
+            <h:form>
+                <div class="col-6">
+                    <h2>Rechercher</h2>
+                        <div class="input-group">
+                        <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" />
+                        <h:inputText id="nomSear" value="#{articlesController.nomArtRech}" class="form-control"/>
+                        <h:selectOneMenu value="#{articlesController.catRech}" class="form-control">
+                            <f:selectItems value="#{articlesController.allCat}"  />
+                            </h:selectOneMenu>
+                        <span class="input-group-btn">
+                            <h:commandButton class="btn btn-primary" value="Rechercher" action="#{articlesController.rechNomCat()}"/>
+                        </span>
+                        </div>
+                </div>
                 <div class="row">
                     <ui:repeat value="#{articlesController.allArt}" var="item">
                             <div class="col-sm-6 col-md-4">
                                 <div class="thumbnail">
-                                <img class="card-img-top" src="" alt="Card image cap"/>
+                                    <c:if test="#{not empty item.image}">
+                                    <img class="card-img-top" src="/Master2_LMFI_GLA_VenteEncheres-war#{item.image}" alt="Card image cap"/>
+                                    </c:if>
+                                    <c:if test="#{empty item.image}">
+                                    <img class="card-img-top" src="/Master2_LMFI_GLA_VenteEncheres-war/resources/img/no-image.jpg" alt="Card image cap"/>
+                                    </c:if>
                                   <div class="caption">
                                     <div class="divfixheight" >
                                     <h3>#{item.nomArticle}</h3>

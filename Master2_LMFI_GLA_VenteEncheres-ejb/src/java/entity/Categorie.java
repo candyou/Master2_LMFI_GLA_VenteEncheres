@@ -103,7 +103,7 @@ public class Categorie implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Categorie[ idcategorie=" + idcategorie + " ]";
+        return " - " + nomCat + " - ";
     }
     
 }

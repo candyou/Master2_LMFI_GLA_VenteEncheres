@@ -107,7 +107,7 @@ public class UserAdresse implements Serializable {
 
     @Override
     public String toString() {
-        return adresses.getNumRue() + " " + adresses.getNomRue() + "  " + adresses.getCp()+  "  " + adresses.getVille();
+        return "Numero " + adresses.getNumRue() + " Rue " + adresses.getNomRue() + "  CP : " + adresses.getCp()+  "  Ville : " + adresses.getVille();
     }
     
 }

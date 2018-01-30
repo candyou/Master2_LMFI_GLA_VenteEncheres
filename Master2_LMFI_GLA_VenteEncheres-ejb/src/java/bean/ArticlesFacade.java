@@ -51,4 +51,13 @@ public class ArticlesFacade extends AbstractFacade<Articles> {
                  .setParameter("datelimite", new Date())
                  .getResultList();
      }
+     
+     public List<Articles> getByCatName(String nomArticle, int idCat){
+         return em.createNamedQuery("Articles.findByCatAndName",Articles.class)
+                 .setParameter("nomArticle", nomArticle)
+                 .setParameter("cat",idCat)
+                 .getResultList();
+                 
+                 
+     }
 }

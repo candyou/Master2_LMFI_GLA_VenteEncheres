@@ -127,7 +127,7 @@ public class Facturation implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Facturation[ idfacturation=" + idfacturation + " ]";
+        return "Carte Bancaire N : " + numCb;
     }
     
 }
