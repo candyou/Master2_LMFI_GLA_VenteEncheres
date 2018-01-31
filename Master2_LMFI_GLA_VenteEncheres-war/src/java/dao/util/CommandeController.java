@@ -4,8 +4,11 @@ import entity.Commande;
 import dao.util.util.JsfUtil;
 import dao.util.util.PaginationHelper;
 import bean.CommandeFacade;
+import entity.Articles;
+import entity.ParticipeEnch;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -28,6 +31,7 @@ public class CommandeController implements Serializable {
     private CommandeFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private int idComm;
 
     public CommandeController() {
     }
@@ -190,6 +194,31 @@ public class CommandeController implements Serializable {
 
     public Commande getCommande(java.lang.Integer id) {
         return ejbFacade.find(id);
+    }
+    
+    public List<Commande> commandebyuser(){
+        return ejbFacade.commandesByUser((int)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser"));
+    }
+    
+    public double montantCommande(int idComm){
+        double total = 0;
+        List<ParticipeEnch> lis = ejbFacade.find(idComm).getParticipeEnchList();
+        for (ParticipeEnch li : lis) {
+            total = total + li.getPrixProp();
+        }
+        return total;
+    }
+    
+    public void listArtByComm(int idComm){
+        this.idComm = idComm;
+        listArtComm();
+        try{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/Master2_LMFI_GLA_VenteEncheres-war/commande/ListArticle.xhtml");
+        }catch(Exception e){}
+    }
+    
+    public List<ParticipeEnch> listArtComm(){
+        return ejbFacade.find(idComm).getParticipeEnchList();
     }
 
     @FacesConverter(forClass = Commande.class)

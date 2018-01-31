@@ -4,6 +4,7 @@ import entity.Facturation;
 import dao.util.util.JsfUtil;
 import dao.util.util.PaginationHelper;
 import bean.FacturationFacade;
+import bean.UsersFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -26,6 +27,8 @@ public class FacturationController implements Serializable {
     private DataModel items = null;
     @EJB
     private FacturationFacade ejbFacade;
+    @EJB
+    private UsersFacade userFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -185,7 +188,7 @@ public class FacturationController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        return JsfUtil.getSelectItems(userFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")).getFacturationList(), true);
     }
 
     public Facturation getFacturation(java.lang.Integer id) {

@@ -33,7 +33,7 @@
                             <f:selectItems value="#{articlesController.allCat}"  />
                             </h:selectOneMenu>
                         <span class="input-group-btn">
-                        <button type="submit" class="btn btn-primary btn-sm">Rechercher</button>
+                            <h:commandButton class="btn btn-primary" value="Rechercher" action="#{articlesController.rechNomCat()}"/>
                         </span>
                         </div>
                 </div>

@@ -3,12 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/header.xhtml</file>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/commande/ListArticle.xhtml</file>
             <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/articles/Commande.xhtml</file>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/articles/View.xhtml</file>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/articles/Participer.xhtml</file>
             <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/src/java/dao/util/ArticlesController.java</file>
-            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/participeEnch/MesEnchere.xhtml</file>
-            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/src/java/dao/util/UserArticleController.java</file>
             <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/src/java/dao/util/ParticipeEnchController.java</file>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/src/java/dao/util/AdressesController.java</file>
             <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/articles/Panier.xhtml</file>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/participeEnch/Participer.xhtml</file>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/index.xhtml</file>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/src/java/dao/util/CommandeController.java</file>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/commande/List.xhtml</file>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/articles/BonneAffaire.xhtml</file>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/participeEnch/MesEnchere.xhtml</file>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/web/articles/Create.xhtml</file>
+            <file>file:/C:/Users/Mohamed/Desktop/Final/Master2_LMFI_GLA_VenteEncheres/Master2_LMFI_GLA_VenteEncheres-war/src/java/dao/CommandeFacade.java</file>
         </group>
     </open-files>
 </project-private>

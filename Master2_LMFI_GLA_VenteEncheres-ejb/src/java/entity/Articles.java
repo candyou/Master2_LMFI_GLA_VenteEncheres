@@ -44,8 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Articles.findByNomArticle", query = "SELECT a FROM Articles a WHERE a.nomArticle = :nomArticle AND a.dateLimite  > :dateLimite")
     , @NamedQuery(name = "Articles.findByDescription", query = "SELECT a FROM Articles a WHERE a.description = :description")
     , @NamedQuery(name = "Articles.findByPrixDepart", query = "SELECT a FROM Articles a WHERE a.prixDepart = :prixDepart")
-    , @NamedQuery(name = "Articles.findByValide", query = "SELECT a FROM Articles a WHERE a.dateLimite > :datelimite")
-    , @NamedQuery(name = "Articles.findByCatAndName", query = "SELECT a FROM Articles a WHERE a.nomArticle = :nomArticle")
+    , @NamedQuery(name = "Articles.findByValide", query = "SELECT a FROM Articles a ,UserArticle ua,Users u  WHERE a.dateLimite > :datelimite AND  a=ua.articles AND  ua  MEMBER OF  u.userArticleList AND u.idusers <> :idusers")
+    , @NamedQuery(name = "Articles.findByCatAndName", query = "SELECT a FROM Articles a,Users u,UserArticle ua,Categorie b WHERE ((a.nomArticle = :nomArticle  AND (b.idcategorie = :idCat AND b MEMBER OF a.categorieList )) AND a.dateLimite > :datelimite) AND( a=ua.articles AND  ua  MEMBER OF  u.userArticleList AND u.idusers <> :idusers)" )
     , @NamedQuery(name = "Articles.findByDateLimite", query = "SELECT a FROM Articles a WHERE a.dateLimite = :dateLimite")})
 public class Articles implements Serializable {
 

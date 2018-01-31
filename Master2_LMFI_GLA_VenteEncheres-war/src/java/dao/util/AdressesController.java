@@ -4,8 +4,12 @@ import entity.Adresses;
 import dao.util.util.JsfUtil;
 import dao.util.util.PaginationHelper;
 import bean.AdressesFacade;
+import bean.UsersFacade;
+import entity.UserAdresse;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -26,6 +30,8 @@ public class AdressesController implements Serializable {
     private DataModel items = null;
     @EJB
     private AdressesFacade ejbFacade;
+    @EJB
+    private UsersFacade userFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -185,10 +191,15 @@ public class AdressesController implements Serializable {
     }
 
     public SelectItem[] getItemsAvailableSelectOne() {
-        return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
+        List<Adresses> listAdr = new ArrayList<Adresses>();
+        List<UserAdresse> listUsrAdr= userFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")).getUserAdresseList();
+        for (UserAdresse userAdresse : listUsrAdr) {
+            listAdr.add(userAdresse.getAdresses());
+        }
+        return JsfUtil.getSelectItems(listAdr, false);
     }
 
-    public Adresses getAdresses(java.lang.Integer id) {
+    public Adresses getAdresses(int id) {
         return ejbFacade.find(id);
     }
 

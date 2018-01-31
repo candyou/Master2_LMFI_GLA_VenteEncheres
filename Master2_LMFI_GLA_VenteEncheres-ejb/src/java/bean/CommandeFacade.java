@@ -6,6 +6,7 @@
 package bean;
 
 import entity.Commande;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +28,12 @@ public class CommandeFacade extends AbstractFacade<Commande> {
 
     public CommandeFacade() {
         super(Commande.class);
+    }
+    
+    public List<Commande> commandesByUser(int idUser){
+        return em.createNamedQuery("Commande.finduser",Commande.class)
+                .setParameter("iduser", idUser)
+                .getResultList();
     }
     
 }

@@ -85,22 +85,6 @@
                     </div>
                 </h:form>
             </div>
-          <div>
-            <h:form styleClass="form-horizontal">
-                <br />
-                <h:commandLink action="#{articlesController.destroyAndView}" value="#{bundle.ViewArticlesDestroyLink}"/>
-                <br />
-                <br />
-                <h:link outcome="Edit" value="#{bundle.ViewArticlesEditLink}"/>
-                <br />
-                <h:commandLink action="#{articlesController.prepareCreate}" value="#{bundle.ViewArticlesCreateLink}" />
-                <br />
-                <h:commandLink action="#{articlesController.prepareList}" value="#{bundle.ViewArticlesShowAllLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ViewArticlesIndexLink}"/>
-            </h:form>
-          </div>
           </div>
         </ui:define>
     </ui:composition>

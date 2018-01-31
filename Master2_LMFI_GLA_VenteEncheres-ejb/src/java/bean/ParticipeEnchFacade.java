@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import javax.ejb.Schedule;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -81,5 +82,17 @@ public class ParticipeEnchFacade extends AbstractFacade<ParticipeEnch> {
                 .getResultList();
         return listPart;
     }
+      
+     @Schedule(second = "*/5", minute = "*", hour = "*")
+     public void editStatutPart(){
+         //System.out.println("bean.ParticipeEnchFacade.editStatutPart()");
+         List<ParticipeEnch> listPart = em.createNamedQuery("ParticipeEnch.getMaxPartEditStatus",ParticipeEnch.class)
+                .setParameter("dateLimite", new Date())
+                .getResultList();
+         for (ParticipeEnch participeEnch : listPart) {
+             participeEnch.setEtatParticip(Short.parseShort("1"));
+             em.merge(participeEnch);
+         }
+     }
     
 }

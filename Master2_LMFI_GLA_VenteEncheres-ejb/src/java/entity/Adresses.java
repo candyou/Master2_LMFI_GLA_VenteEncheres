@@ -144,7 +144,7 @@ public class Adresses implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Adresses[ idadresse=" + idadresse + " ]";
+        return "Numero " + getNumRue() + " Rue " + getNomRue() + "  CP : " + getCp()+  "  Ville : " + getVille();
     }
     
 }

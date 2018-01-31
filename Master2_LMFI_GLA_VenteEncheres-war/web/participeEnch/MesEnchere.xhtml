@@ -54,6 +54,7 @@
                                   <div class="card-block text-center">
                                       <h:commandButton class="btn btn-primary" value="Détails de l'article" action="#{articlesController.prepareViewId(item.idArticle.idarticle)}"/>
                                       <h:commandButton class="btn btn-success" value="Ajoute au Panier" action="#{articlesController.ajoutpanier(item.idpartEnch)}" rendered="#{participeEnchController.getEtatButton(item.idpartEnch)}" />
+                                      <h:commandButton class="btn btn-warning" value="Voir dans Panier" action="#{participeEnchController.redirectPanier()}" rendered="#{!participeEnchController.getEtatVoirPanier(item.idpartEnch)}" />
                                   </div>
                                 </div>
                                 </div>

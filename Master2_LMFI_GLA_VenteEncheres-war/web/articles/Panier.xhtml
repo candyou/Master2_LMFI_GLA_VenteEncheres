@@ -45,6 +45,7 @@
                                   </ul>
                                   <div class="card-block text-center">
                                       <h:commandButton class="btn btn-primary" value="Détails" action="#{articlesController.prepareViewId(item.idArticle.idarticle)}"/>
+                                      <h:commandButton class="btn btn-danger" value="Retirer Du Panier" action="#{articlesController.retirerPanier(item.idpartEnch)}"/>
                                   </div>
                                 </div>
                                 </div>
@@ -56,18 +57,18 @@
                      <div class="control-group">
                             <label class="control-label" for="adresse">Adresse de livraison</label>
                            
-                    <h:selectOneMenu value="#{articlesController.adresse}" class="form-control">
-                        <f:selectItems value="#{articlesController.userAdresse}"  />
-                    </h:selectOneMenu>
+                            <h:selectOneMenu value="#{articlesController.adresse}" class="form-control">
+                                <f:selectItems value="#{adressesController.itemsAvailableSelectOne}"  />
+                        </h:selectOneMenu>
                      </div>
                     <div class="control-group">
                             <label class="control-label" for="nomcb">Numero de votre Carte Bancaire</label>
                             <h:selectOneMenu value="#{articlesController.facturation}" class="form-control">
-                                <f:selectItems value="#{articlesController.factUser}"  />
+                                <f:selectItems value="#{facturationController.itemsAvailableSelectOne}"  />
                             </h:selectOneMenu>
                     </div>
                       
-                     <h:commandLink action="#{articlesController.confirmerachat()}" value="Confirmer votre achat" immediate="true"/>
+                     <h:commandLink action="#{articlesController.confirmerachat()}" value="Confirmer votre achat"/>
                     </div>
                 </div>               
             </h:form>

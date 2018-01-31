@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.ejb.EJB;
@@ -61,6 +62,7 @@ public class ArticlesController implements Serializable {
     private Categorie catRech;
     private String nomArtRech;
     private List<Articles> SearchedArt;
+     private List<Articles> RandomArt;
 
     public Double getPrixprop() {
         return prixprop;
@@ -146,7 +148,7 @@ public class ArticlesController implements Serializable {
     }
     
     public List<Articles> getAllArt(){
-        return ejbFacade.getValideArti();
+        return ejbFacade.getValideArti((int)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser"));
     }
     
     public String commandeList(){
@@ -163,7 +165,12 @@ public class ArticlesController implements Serializable {
         Commande c = new Commande();
         c.setIdAdresse(adresse);
         c.setIdFacturation(facturation);
-        c.setParticipeEnchList(partienchFacade.getPanier((int)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")));
+        List<ParticipeEnch> listP = partienchFacade.getPanier((int)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser"));
+        for (ParticipeEnch participeEnch : listP) {
+            participeEnch.setEtatAchat(Short.parseShort("2"));
+            partienchFacade.edit(participeEnch);
+        }
+        c.setParticipeEnchList(listP);
         commandeFacade.create(c);
         return "Commande";
     }
@@ -177,6 +184,15 @@ public class ArticlesController implements Serializable {
         p.setEtatAchat(Short.parseShort("1"));
         partienchFacade.edit(p);
         try{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/Master2_LMFI_GLA_VenteEncheres-war/articles/Panier.xhtml");
+        }catch(Exception e){}
+    }
+    
+    public void retirerPanier(int id){
+        ParticipeEnch p = partienchFacade.find(id);
+        p.setEtatAchat(Short.parseShort("0"));
+        partienchFacade.edit(p);
+         try{
         FacesContext.getCurrentInstance().getExternalContext().redirect("/Master2_LMFI_GLA_VenteEncheres-war/articles/Panier.xhtml");
         }catch(Exception e){}
     }
@@ -426,7 +442,8 @@ public class ArticlesController implements Serializable {
     }
     
     public void rechNomCat(){
-        SearchedArt = ejbFacade.getByCatName(nomArtRech, catRech.getIdcategorie());
+        System.out.println("dao.util.ArticlesController.rechNomCat()" + nomArtRech +" " +catRech);
+        SearchedArt = ejbFacade.getByCatName(nomArtRech, catRech.getIdcategorie(),(int)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser"));
         try{
         FacesContext.getCurrentInstance().getExternalContext().redirect("/Master2_LMFI_GLA_VenteEncheres-war/articles/Search.xhtml");
         }catch(Exception e){}
@@ -509,6 +526,47 @@ public class ArticlesController implements Serializable {
     public List<Facturation> getFactUser(){
         return userFacade.find(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("iduser")).getFacturationList();
     }
+    
+    public List<Articles> random(){
+        Vector<Articles> rdm = new Vector<Articles>();
+        List<Integer> nums = new Vector<Integer>();
+        List<Articles> tmp = new Vector<>();
+            tmp= getAllArt();
+           int rnum;
+              
+          Random randomGenerator = new Random();
+           for (int idx = 1; idx <= 3; ++idx){
+                 
+               int randomInt = randomGenerator.nextInt(tmp.size()-1);
+               if(!nums.contains(randomInt)){ nums.add(randomInt);
+               idx--;
+               }
+               }
+           
+           for(int j=0;j<3;j++ ){
+               
+               rdm.add(tmp.get(nums.get(j)));
+           }
+           
+           return rdm;
+        
+    }
+
+    public List<Articles> getRandomArt() {
+        /*
+        System.out.println("dao.util.ArticlesController.getRandomArt()" + ejbFacade.listRandoArt);
+        return ejbFacade.listRandoArt;
+       */
+        return random();
+    }
+
+    public void setRandomArt(List<Articles> RandomArt) {
+        this.RandomArt = RandomArt;
+    }
+    
+    
+    
+    
     @FacesConverter(forClass = Articles.class)
     public static class ArticlesControllerConverter implements Converter {
 

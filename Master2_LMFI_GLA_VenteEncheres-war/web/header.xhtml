@@ -29,15 +29,16 @@
                           <li><h:link value="Mes Enchéres" outcome="/participeEnch/MesEnchere" /></li>
                           <li><h:link value="Mes Ventes" outcome="/userArticle/MesVentes" /></li>
                           <li><h:link value="Mon Panier" outcome="/articles/Panier" /></li>
-                      <li><a href="#contact">Mes Commandes</a></li>
+                          <li><h:link value="Bonnes Affaires !" outcome="/articles/BonneAffaire" /></li>
+                          <li><h:link value="Mes Commandes" outcome="/commande/List" /></li>
                     </ul>
                       <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item">
-                            <span class="navbar-brand">Bonjour, #{authentController.connecteduser()} !</span>
+                            <span class="label label-info">Bonjour, #{authentController.connecteduser()} !</span>
                         </li>
                         <li class="nav-item">
                                 <h:form>
-                                    <span class="navbar-brand"> <h:commandLink class="nav-link" action="#{authentController.logout()}">Déconnexion</h:commandLink></span>
+                                    <span class="navbar-brand" style="color:red"> <h:commandLink class="nav-link" action="#{authentController.logout()}">Déconnexion</h:commandLink></span>
                                 </h:form>
                         </li>
                       </ul>

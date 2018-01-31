@@ -90,7 +90,7 @@ public class ParticipeEnchController implements Serializable {
     public String prepareCreate() {
         current = new ParticipeEnch();
         selectedItemIndex = -1;
-        return "Create";
+        return "MesEnchere";
     }
 
     public String create() {
@@ -242,7 +242,7 @@ public class ParticipeEnchController implements Serializable {
     
     public String getEtatAchat(int id){
         ParticipeEnch part = ejbFacade.find(id);
-        if (getEtatEnch(id) == "Terminé" && ejbFacade.getMaxProp(part.getIdArticle().getIdarticle()) == part.getPrixProp()){
+        if (getEtatEnch(id) == "Terminé" && ejbFacade.find(id).getEtatParticip() == Short.parseShort("1")){
             return "Gagnée !";
         }
         else if (getEtatEnch(id) == "En cours") return "En cours";
@@ -250,9 +250,24 @@ public class ParticipeEnchController implements Serializable {
     }
     
     public boolean getEtatButton(int id){
-        if (getEtatAchat(id) == "Gagnée !")
+        ParticipeEnch part = ejbFacade.find(id);
+        if (getEtatAchat(id) == "Gagnée !" && part.getEtatAchat()== Short.parseShort("0"))
             return true;
         return false;
+    }
+    
+    public boolean getEtatVoirPanier(int id){
+        ParticipeEnch part = ejbFacade.find(id);
+        if (getEtatEnch(id) == "En cours" || part.getEtatAchat()== Short.parseShort("0"))
+            return true;
+        return false;
+    }
+    
+    public void redirectPanier(){
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/Master2_LMFI_GLA_VenteEncheres-war/articles/Panier.xhtml");
+        } catch (Exception e) {
+        }
     }
     
     public List<ParticipeEnch> panierList(){

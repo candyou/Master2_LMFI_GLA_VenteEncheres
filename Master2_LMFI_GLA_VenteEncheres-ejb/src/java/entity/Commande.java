@@ -32,7 +32,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Commande.findAll", query = "SELECT c FROM Commande c")
-    , @NamedQuery(name = "Commande.findByIdcommande", query = "SELECT c FROM Commande c WHERE c.idcommande = :idcommande")})
+    , @NamedQuery(name = "Commande.findByIdcommande", query = "SELECT c FROM Commande c WHERE c.idcommande = :idcommande")
+    , @NamedQuery(name ="Commande.finduser",query ="SELECT c FROM Commande c,Users u,Facturation f  WHERE f.idUser=u AND u.idusers = :iduser AND c MEMBER OF f.commandeList") 
+    })
 public class Commande implements Serializable {
 
     private static final long serialVersionUID = 1L;

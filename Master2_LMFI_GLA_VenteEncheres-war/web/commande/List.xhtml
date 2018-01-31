@@ -9,53 +9,42 @@
         <ui:define name="title">
             <h:outputText value="#{bundle.ListCommandeTitle}"></h:outputText>
         </ui:define>
-        <ui:define name="body">
+        <ui:define name="container">
+            <div class="panel panel-primary" style="margin:20px;">
+            <div class="panel-heading">
+              Mes Commandes
+            </div>
+            <div class="panel-body">
             <h:form styleClass="jsfcrud_list_form">
                 <h:panelGroup id="messagePanel" layout="block">
                     <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
                 </h:panelGroup>
-                <h:outputText escape="false" value="#{bundle.ListCommandeEmpty}" rendered="#{commandeController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{commandeController.items.rowCount > 0}">
-                    <h:outputText value="#{commandeController.pagination.pageFirstItem + 1}..#{commandeController.pagination.pageLastItem + 1}/#{commandeController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{commandeController.previous}" value="#{bundle.Previous} #{commandeController.pagination.pageSize}" rendered="#{commandeController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{commandeController.next}" value="#{bundle.Next} #{commandeController.pagination.pageSize}" rendered="#{commandeController.pagination.hasNextPage}"/>&nbsp;
-                    <h:dataTable value="#{commandeController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCommandeTitle_idcommande}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idcommande}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCommandeTitle_idAdresse}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idAdresse}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListCommandeTitle_idFacturation}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.idFacturation}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="&nbsp;"/>
-                            </f:facet>
-                            <h:commandLink action="#{commandeController.prepareView}" value="#{bundle.ListCommandeViewLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{commandeController.prepareEdit}" value="#{bundle.ListCommandeEditLink}"/>
-                            <h:outputText value=" "/>
-                            <h:commandLink action="#{commandeController.destroy}" value="#{bundle.ListCommandeDestroyLink}"/>
-                        </h:column>
-                    </h:dataTable>
-                </h:panelGroup>
-                <br />
-                <h:commandLink action="#{commandeController.prepareCreate}" value="#{bundle.ListCommandeCreateLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ListCommandeIndexLink}"/>
+                    <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Id Commande</th>
+                        <th scope="col">Adresse</th>
+                        <th scope="col">N° Carte Bancaire</th>
+                        <th scope="col">Montant Totale</th>
+                        <th scope="col">Articles</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <ui:repeat value="#{commandeController.commandebyuser()}" var="item">
+                      <tr>
+                          <th scope="row">#{item.idcommande}</th>
+                          <td>#{item.idAdresse}</td>
+                          <td>#{item.idFacturation.numCb}</td>
+                          <td>#{commandeController.montantCommande(item.idcommande)} €</td>
+                          <td><h:commandButton class="btn btn-primary" value="Liste des Articles" action="#{commandeController.listArtByComm(item.idcommande)}"/></td>
+
+                      </tr>
+                      </ui:repeat>
+                    </tbody>
+                  </table>
             </h:form>
+            </div>
+            </div>
         </ui:define>
     </ui:composition>
 
